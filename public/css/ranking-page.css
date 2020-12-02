@@ -1,0 +1,383 @@
+/******************************************************************************
+**  Description: RANKING PAGE - css file for the page
+******************************************************************************/
+
+/* Change the arrow to a pointer when hovering over the table rows */
+td:hover {
+    cursor: pointer;
+}
+
+#dashboard-container {
+    max-width: 730px;
+}
+
+#dashboard-container-empty {
+    width: 730px;
+    margin: auto;
+    padding-right: 0;
+}
+
+.posting-content {
+    width: 93%;
+}
+
+.no-posting-content {
+    width: 93%;
+}
+
+#title-div {
+    display: inline-block;
+    max-width: 100%;
+    margin: 10px 0 0 7px;
+    font-size: medium;
+    font-weight: bold;
+    font-size: 17px;
+    color: #757575;
+    font-family: "Helvetica","Arial",sans-serif;
+}
+
+/* Graphic Division  ------------------------------------------------------------- */
+
+#graphic-div {
+    float: right;
+    width: 204.433px;
+    margin: 10px 0px 8px 450px;
+}
+
+#graphic-txt {
+    margin: 10px 0 0 0px;
+    font-size: medium; 
+    font-weight: bold; 
+    display: inline-block;
+}
+
+.pi-link {
+    background-color: #ebb54b;
+    color: rgb(66,66,66);
+    border: none;
+    cursor: pointer;
+    border-radius: 2px;
+    width: 81px;
+    height: 27px;
+    margin: 0px 0px -7px 23px;
+    display: inline-block;
+}
+
+.pi-link:hover .tooltiptext {
+    visibility: visible;
+}
+
+.pi-link:hover {
+    background-color: #c7942d;
+}
+
+#pi-image {
+    scale: 100%;
+    opacity: .75;
+    width: 18px;
+    margin: 4px 0 0 32px;
+}
+
+.tooltiptext {
+    visibility: hidden;
+    width: 170px;
+    height: 35px;
+    background-color: rgb(41, 41, 41);
+    color: #fff;
+    text-align: center;
+    padding-top: 15px;
+    border-radius: 6px;
+
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    top: 85px;
+    left: 490px;
+    z-index: 2;
+}
+
+
+/* Back button ------------------------------------------------------------- */
+
+#back-div {
+    float: right;
+    margin: 5px 0 8px 0;
+}
+
+#back-txt {
+    margin: 5px 0 0 0;
+    font-size: medium; 
+    font-weight: bold; 
+    display: inline-block;
+}
+
+#back-btn {
+    display: inline-block;
+    margin: 0 0 0 19px;
+    width: 81px;
+    height: 27px;
+    text-align: center;
+}
+
+#back-btn-new {
+    display: inline-block;
+    margin: 7px 0px 0 23px;
+    width: 81px;
+    height: 27px;
+    text-align: center;
+}
+
+.btn-style {
+    background-color: #ebb54b;
+    font-weight: 100;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: rgb(66,66,66);
+    border: none;
+    cursor: pointer;
+    border-radius: 2px;
+    width: 85px;
+    margin-top: 10px;
+    padding: 5px;
+}
+
+.btn-style:hover {
+    background-color: #d39c2e;
+}
+
+
+/* Table styling ----------------------------------------------------------- */
+
+#row-msg {
+    float: left;
+    width: 200px;
+    margin: -25px 0 0px 100px;
+    font-size: 12px;
+}
+
+#recordTable {
+    /* margin-top: -30px; */
+    width: 200px;
+}
+
+.user-numbers {
+    text-align: center;
+}
+
+.quiz-rank {
+    width: 100%;
+    padding-right: 0 !important;
+}
+
+.email-txt {
+    width: 160px;
+    overflow: hidden;
+}
+
+
+/* Style tables with no quizzes -------------------------------------------- */
+
+#no-posting-div {
+    width: 270px;
+    margin: 70px auto 40px auto;
+}
+
+#no-posting-break {
+    margin-top: 32px;
+}
+
+#question-logo {
+    height: 50px;
+    display: inline-block;
+    margin-top: -10px;
+    margin-left: 15px;
+}
+
+#no-posting-txt {
+    display: inline-block;
+    font-size: 22px;
+    color: #ebb54b;
+}
+
+
+/* QUIZ MODAL -------------------------------------------------------------- */
+
+/* The Modal (background) */
+.modal {
+    display: none;      /* Hidden by default */
+    position: fixed;    /* Stay in place */
+    z-index: 1;         /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;        /* Full width */
+    height: 100%;       /* Full height */
+    overflow: auto;     /* Enable scroll if needed */
+    background-color: rgb(0,0,0);       /* Fallback color */
+    background-color: rgba(0,0,0,0.4);  /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 130px auto 0px auto;       /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 2px;
+    width: 660px;             /* Could be more or less, depending on screen size */
+    text-align: center;
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Change the arrow to a pointer when hovering over the table rows */
+td:hover {
+    cursor: pointer;
+}
+
+#quiz-comment {
+    height:160px;
+    width:250px
+}
+
+#quiz-comment-container {
+    margin: 40px auto 10px auto;
+}
+
+/* Quiz markup correct / incorrect */
+.correct {
+    color: green;
+}
+
+.incorrect {
+    color: red;
+}
+
+
+/* Media queries for tablets ----------------------------------------------- */
+
+@media only screen and (max-width: 775px) {
+    #dashboard-container {
+        width: 95%;
+    }
+
+    .modal-content {
+        width: 60%;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    #row-msg {
+        font-size: 10px;
+        margin-top: 25px;
+    }
+
+    #title-div {
+        display: block;
+        text-align: center;
+        position: relative;
+        margin: 0px auto 5px auto;
+        padding-right: 25px;
+    }
+
+    #back-div {
+        float: none;
+        width: 210px;
+        margin: 25px auto 15px auto;
+    }
+
+    #graphic-div {
+        float: none;
+        margin: 0 auto 0 auto;
+    }
+
+    .pi-link {
+        margin-top: 0;
+    }
+
+    #quiz-comment {
+        min-height: 160px;
+        max-width: 220px;
+    }
+
+    #quiz-comment-container {
+        width: 95%;
+    }
+}
+
+
+/* Media queries for vertical mobile phones -------------------------------- */
+
+@media only screen and (max-width: 500px) {
+    #dashboard-container {
+        width: 100%;
+    }
+
+    .mdl-card__supporting-text {
+        width: 100%;
+        padding: 0px 0px 5px 3px !important;
+    }
+
+    #title-div {
+        display: block;
+        text-align: center;
+        position: relative;
+        margin: 5px auto 10px auto;
+        padding-right: 25px;
+    }
+
+    #no-posting-div {
+        margin: 60px auto 30px auto;
+    }
+
+    .posting-content {
+        margin: 15px auto 0px auto;
+    }
+
+    .no-posting-content {
+        margin: 15px auto 10px auto;
+    }
+
+    #no-posting-break {
+        width: 88%;
+        margin-left: 5%;
+    }
+
+    .mdl-data-table__cell--non-numeric {
+        font-size: 9px;
+    }
+
+    #table-body {
+        font-size: 8px;
+    }
+
+    .email-txt {
+        width: 105px;
+    }
+
+    .quiz-rank {
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    #quiz-comment {
+        width: 95%;
+    }
+
+    #quiz-comment-container {
+        width: 100%;
+    }
+}

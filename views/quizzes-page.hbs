@@ -1,0 +1,229 @@
+{{!-- Home dashboard view - using express handlebars --}}
+
+<title>Quiz Soft | Saved Quizzes</title>
+<link type="text/css" rel="stylesheet" href="css/quizzes-page.css">
+
+{{!-- Container for the dashboard --}}
+<div id="top-row-container">
+  
+    {{#if quizzes}}
+
+        {{!-- If the user has quizzes --}}
+        <div id="dashboard-container" class="mdl-card mdl-shadow--2dp">
+
+            <div class="mdl-card__title mdl-color-text--white dashboard-top-bar">
+                <h2 class="mdl-card__title-text">My Quizzes</h2>
+            </div>
+
+            <div id="modal-container" class="mdl-card__supporting-text mdl-color-text--grey-600 quiz-content">
+                <div id="profile-div">
+                    <img id="profile-image" src={{photo}}>
+                    <p id="profile-email">{{email}}</p>
+                </div>
+                
+                <div id="upload-div">
+                    <p id="upload-txt">Upload a Quiz</p>
+                    <label id="upload-btn" class="btn-style">
+                        <input
+                            type="file" 
+                            class="btn-style" 
+                            id="upload-hidden"
+                            accept=".quiz"
+                        >
+                        Upload
+                    </label>
+                </div>
+
+                <p id="row-msg"><i>Click a row to view the quiz</i></p>
+        
+                {{!-- Display No quizzes OR Table that displays the user's quizzes --}}
+                <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" id="recordTable">
+                    <thead>
+                        <tr>
+                            <th class="mdl-data-table__cell--non-numeric">Quiz Name</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="table-body">
+                        {{#each this.quizzes}}
+
+                            <tr id="rowModal{{@index}}">
+                                <td class="mdl-data-table__cell--non-numeric">
+                                    <div class="quiz-name">{{name}}</div>
+                                </td>
+                                <td>
+                                    <input 
+                                        type="button" 
+                                        value="Download" 
+                                        class="btn-style"
+                                        id="downloadBtn"
+                                        onclick="downloadQuiz(`recordTable`, this, `{{_id}}`, event);"
+                                    >
+                                </td>
+                                <td>
+                                    <input 
+                                        type="button" 
+                                        value="Delete"
+                                        class="btn-style" 
+                                        onclick="deleteQuiz(`recordTable`, this, `{{_id}}`, event);"
+                                    >
+                                </td>
+                            </tr>
+
+                            {{!-- The Modal --}}
+                            <div id="modal{{@index}}" class="modal">
+                                {{!-- Modal content --}}
+                                <div class="modal-content square-card mdl-card--expand mdl-shadow--2dps mdl-color-text--black-600">
+                                    <span class="close">&times;</span>
+                                    <fieldset>
+                                        <h5><b>Quiz Name: </b>{{name}}</h5>
+                                        <h6><b>Quiz Category: </b>{{category}}</h6>
+                                        <h6><b>Time Limit: </b>{{timeLimit}} minutes</h6>
+                                        <h6><b>Number of questions: </b>{{questions.length}}</h6>
+                                    </fieldset>
+                                    <hr>
+
+                                    {{!-- Iterate through each question and display with respect to quizType --}}
+                                    {{#each_question questions questions.length}}
+                                    <div>
+                                        <fieldset>
+                                            <h5>Q{{inc @q_index}}</h5>
+                                            <p>   
+                                                {{#if (quiz_type_expose this "mult-choice")}}
+                                                    <label><i>{{quiz_question_expose this 0}}</i></label></br>
+                                                    {{#each this.quizAnswers}}                                         
+                                                        <input type = "radio"
+                                                            id = "Q{{@q_index}}_{{this.a_index}}"
+                                                            class = "mult-choice"
+                                                            value = "{{this}}"
+                                                            disabled
+                                                            {{#with ../quizKey}}
+                                                                {{#if (eq_str_num this @index)}}
+                                                                    checked
+                                                                {{/if}}
+                                                            {{/with}}
+                                                        />
+                                                        <label for = "Q{{@q_index}}_{{this.a_index}}">{{this}}</label></br>
+                                                    {{/each}}
+                                                    <input type="radio" style="display:none;" name="{{@q_index}}" id="default-mult-choice" class="mult-choice" value=""/>
+                                                {{/if}}
+
+                                                {{#if (quiz_type_expose this "true-false")}}
+                                                    <label><i>{{quiz_question_expose this 0}}</i></label></br>
+                                                        <input type = "radio"
+                                                            id = "Q{{@q_index}}_0"
+                                                            class = "true-false"
+                                                            value = "true"
+                                                            disabled
+                                                            {{#with this.quizKey}}
+                                                                {{#if (eq this.[0] 'true')}}
+                                                                    checked
+                                                                {{/if}}
+                                                            {{/with}} 
+                                                        />
+                                                        <label for = "Q{{@q_index}}_0">True</label></br>
+                                                        <input type = "radio"
+                                                            id = "Q{{@q_index}}_1"
+                                                            class = "true-false"
+                                                            value = "false"
+                                                            disabled
+                                                            {{#with this.quizKey}}
+                                                                {{#if (eq this.[0] 'false')}}
+                                                                    checked
+                                                                {{/if}}
+                                                            {{/with}} 
+                                                        />
+                                                        <label for = "Q{{@q_index}}_1">False</label></br>
+                                                {{/if}}
+
+                                                {{#if (quiz_type_expose this "fill-blank")}}
+                                                    <label><i>{{quiz_question_expose this 0}} </i>___<i> {{quiz_question_expose this 1}}</i></label></br>   
+                                                        <input type = "text"
+                                                            name = "{{@q_index}}"
+                                                            id = "Q{{@q_index}}_0"
+                                                            class = "fill-blank"
+                                                            disabled
+                                                            {{#with this.quizKey}}
+                                                                value = "{{this.[0]}}"
+                                                            {{/with}}
+                                                        /></br>
+                                                {{/if}}
+
+                                                {{#if (quiz_type_expose this "check-all")}}
+                                                    <label><i>{{quiz_question_expose this 0}}</i></label></br>
+                                                    {{#each this.quizAnswers}}
+                                                        <input type = "checkbox"
+                                                            id = "Q{{@q_index}}_{{this.a_index}}"
+                                                            class = "check-all"
+                                                            value = "{{this}}"
+                                                            disabled
+                                                            {{#with ../quizKey}}
+                                                                {{#each this}}
+                                                                    {{#if (eq_str_num this @../index)}}
+                                                                        checked
+                                                                    {{/if}}
+                                                                {{/each}}
+                                                            {{/with}}
+                                                        />
+                                                        <label >{{this}}</label></br>
+                                                    {{/each}}
+                                                {{/if}}
+                                            </p>
+                                        </fieldset>
+                                    </div>
+                                    {{/each_question}}
+
+                                </div>
+                            </div>
+
+                        {{/each}}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    {{else}}
+
+        {{!-- No quizzes --}}
+        <div id="dashboard-container" class="mdl-card mdl-shadow--2dp">
+
+            <div class="mdl-card__title mdl-color-text--white dashboard-top-bar">
+                <h2 class="mdl-card__title-text">My Quizzes</h2>
+            </div>
+
+            <div class="mdl-card__supporting-text mdl-color-text--grey-600 no-quiz-content">
+                <div id="profile-div">
+                    <img id="profile-image" src={{photo}}>
+                    <p id="profile-email">{{email}}</p>
+                </div>
+
+                <div id="upload-div">
+                    <p id="upload-txt">Upload a Quiz</p>
+                    <label id="upload-btn" class="btn-style">
+                        <input
+                            type="file" 
+                            class="btn-style" 
+                            id="upload-hidden"
+                            accept=".quiz"
+                        >
+                        Upload
+                    </label>
+                </div>
+
+                <hr id="no-quiz-break">
+                <div id="no-quiz-div">
+                    <img id="question-logo" src="images/logo.png"/>
+                    <p id="no-quiz-txt">No Quizzes Created</p>
+                </div>
+
+            </div>
+        </div>
+   
+    {{/if}}
+
+</div>
+
+<script src="js/quizzes-page-client.js"></script>

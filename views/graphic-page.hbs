@@ -1,0 +1,67 @@
+{{!-- Settings view - using express handlebars --}}
+
+<title>Quiz Soft | Ranking</title>
+<link type="text/css" rel="stylesheet" href="css/graphic-page.css">
+
+<!-- ajax library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
+
+<!-- Color scale -->
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
+
+{{!-- Container for the dashboard --}}
+<div id="top-row-container">
+
+    {{!-- Pie Chart Div --}}
+    <div id="dashboard-container" class="mdl-card mdl-shadow--2dp">
+
+        <div class="mdl-card__title mdl-color-text--white dashboard-top-bar">
+            <h2 class="mdl-card__title-text">Time Taken</h2>
+        </div>
+
+        <div class="mdl-card__supporting-text mdl-color-text--grey-600 posting-content">
+
+            <div id="back-div">
+                <p id="back-txt">Rankings</p>
+                <button id="back-btn" class="btn-style" onclick="goBack()">Back</button>
+            </div>
+
+            <p id="title-div"><b>Job Posting: </b>{{title}}</p>
+            </br>
+            <p id="title-div"><b>Quiz: </b>{{quiz_name}}</p>
+            </br>
+            <p id="title-div"><b>Total Responses: </b>{{num_of_rankings}}</p>
+            </br>
+
+            <hr id="pie-break">
+
+            <b id="pie-chart-txt">Graphic for time taken to submit in minutes</b>
+
+            <!-- Div for the pie chart of time taken to complete -->
+            <div id="time_viz"></div>
+            <div id="legend"><svg id="legend_viz"></svg></div>
+        </div>
+    </div>
+
+    
+    {{!-- Histogram Chart Div --}}
+    <div id="scores-container" class="mdl-card mdl-shadow--2dp">
+
+        <div class="mdl-card__title mdl-color-text--white dashboard-top-bar">
+            <h2 class="mdl-card__title-text">Scores</h2>
+        </div>
+
+        <div class="mdl-card__supporting-text mdl-color-text--grey-600 posting-content">
+
+            <b id="histogram-chart-txt">Graphic for scores and histogram of frequency</b>
+
+            <!-- Div for the histogram of scores -->
+            <div id="score_viz"></div>
+            <p id="s-percent">Score Percentage</p>
+        </div>
+    </div>
+
+</div>
+
+<script src="js/graphic-client.js"></script>

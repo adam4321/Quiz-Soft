@@ -1,0 +1,238 @@
+/******************************************************************************
+**  Description: JOB POSTING / DASHBOARD HOME PAGE - css file for the page
+******************************************************************************/
+
+#dashboard-container {
+    width: 730px;
+}
+
+#inbox-container {
+    width: 730px;
+    min-height: min-content;
+    height: 200px;
+    margin: 8px auto 0px auto;
+    position: relative;
+}
+
+#account-container {
+    width: 730px;
+    min-height: min-content;
+    height: 150px;
+    margin: 8px auto 80px auto;
+    position: relative;
+}
+
+
+/* Dashboard page styling ------------------------------------------------------ */
+
+#profile-image {
+    height: 35px; 
+    border-radius: 50%; 
+    margin: 1px 0px 10px 5px;
+}
+
+#profile-email {
+    font-size: medium; 
+    font-weight: bold; 
+    display: inline-block;
+    margin: 11px 0px 0px 0px;
+}
+
+.mdl-card__supporting-text {
+    width: 93%;
+}
+
+#email-form-inner {
+    padding-top: 15px !important;
+}
+
+#submit-msg {
+    margin-top: -1px;
+    margin-bottom: 8px;
+}
+
+#submit-msg {
+    text-align: center;
+}
+
+#submit_email{
+    display: block;
+    justify-content: center;
+    background-color: #ebb54b;
+    width: 80px;
+    margin: 25px auto -15px auto;
+    color: rgb(66,66,66);
+}
+
+#submit_email:hover {
+    background-color: #d39c2e;
+}
+
+#removeUserButton{
+    display: inline-block;
+    background-color: rgb(219, 41, 41);
+    color: white;
+    width: 180px;
+    margin: 0px 20px 3px -3px;
+    justify-content: center;
+}
+
+#removeUserButton:hover{
+    background-color: rgb(175, 9, 9);
+}
+
+#delete-msg {
+    display: inline-block;
+    width: 200px;
+}
+
+#inbox-msg {
+    text-align: center;
+}
+
+#inbox-image {
+    margin-left: 47%;
+}
+
+.mdl-badge[data-badge]:after {
+    background-color: red !important;
+    color: white !important;
+  }
+
+
+/* MAIL MODAL -------------------------------------------------------------- */
+
+/* The Modal (background) */
+.modal {
+    display: none;      /* Hidden by default */
+    position: fixed;    /* Stay in place */
+    z-index: 8000;         /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;        /* Full width */
+    height: 100%;       /* Full height */
+    overflow: auto;     /* Enable scroll if needed */
+    background-color: rgb(0,0,0);       /* Fallback color */
+    background-color: rgba(0,0,0,0.4);  /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 130px auto 0px auto;       /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 2px;
+    width: 660px;             /* Could be more or less, depending on screen size */
+    text-align: center;
+}
+
+/* Mail animation  ---------------------------------------------------------- */
+#status-container {
+    width: 300px;
+    min-height: min-content;
+    height: 95px;
+    margin: 8px auto 0px auto;
+    text-align: center;
+    position: relative;
+}
+
+.spinning-mail {
+    width: 60px;
+    height: 60px;
+    background-color: rgb(49, 166, 202);
+    border-color: #ebb54b;
+    border-width: thick;
+    border-style: solid;
+
+    margin: 0 auto;
+    -webkit-animation: rotatesquare 1.2s infinite ease-in-out;
+    animation: rotatesquare 1.2s infinite ease-in-out;
+}
+
+@-webkit-keyframes rotatesquare {
+    0% { -webkit-transform: perspective(120px) }
+    50% { -webkit-transform: perspective(120px) rotateY(180deg) }
+    100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
+}
+
+@keyframes rotatesquare {
+  0% { transform: perspective(120px) rotateX(0deg) rotateY(0deg); } 
+  50% { transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg); } 
+  100% { transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg); }
+}
+
+
+/* Media queries  ---------------------------------------------------------- */
+
+@media only screen and (max-width: 775px) {
+    #dashboard-container {
+        width: 95%;
+    }
+
+    #inbox-container {
+        width: 95%;
+    }
+
+    #account-container {
+        width: 95%;
+    }
+
+    .mdl-card__supporting-text {
+        width: 90%;
+    }
+
+    .modal-content {
+        width: 70%;
+    }
+
+    #status-container {
+        width: 70%;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    #account-container {
+        height: 180px;
+        margin: 8px auto 0px auto;
+    }
+
+    #removeUserButton{
+        display: block;
+        margin: 0 auto 15px auto;
+    }
+
+    #delete-msg {
+        display: block;
+        margin: 0 auto 0 auto;
+    }
+
+    #inbox-container {
+        height: 180px;
+        margin: 8px auto 0px auto;
+    }
+
+    #inbox-msg {
+        display: block;
+        margin: 0 auto 0 auto;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    hr {
+        width: 95%;
+    }
+    
+    #email-form-container {
+        margin: 0 0 -15px -18px;
+        width: 315px;
+    }
+
+    #account-container.mdl-card.mdl-shadow--2dp div.mdl-card__supporting-text.mdl-color-text--grey-600 {
+        width: 280px;
+    }
+
+    #inbox-container.mdl-card.mdl-shadow--2dp div.mdl-card__supporting-text.mdl-color-text--grey-600 {
+        width: 280px;
+    }
+}

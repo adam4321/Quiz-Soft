@@ -1,0 +1,70 @@
+/******************************************************************************
+**  Description: JOBPOSTINGS BUILDER PAGE - css file for the page
+******************************************************************************/
+
+#setup-container {
+    margin: 40px auto 0px auto;
+}
+
+#scroll-target {
+    height: 30px;
+}
+
+#job-container{
+    margin: auto;
+    text-align: center;
+}
+
+textarea {
+  resize: none;
+}
+
+.mdl-button--raised.mdl-button--colored {
+    background-color: #ebb54b;
+}
+
+.mdl-button--raised.mdl-button--colored:hover {
+    background-color: #d8a236;
+}
+
+.mdl-button--fab.mdl-button--mini-fab {
+    height: 23px;
+    min-width: 23px;
+    width: 23px;
+    margin: 0px 0px 2px 10px;
+}
+
+
+#submit-btn {
+    margin: 0px auto -15px auto;
+    color: white;
+    background-color: rgb(49, 166, 202);
+    width: 130px;
+}
+
+#buildjobPosting{
+    background-color: #ebb54b;
+    color: rgb(66,66,66);
+}
+
+#submit-btn:hover {
+    background-color: rgb(23, 133, 167);
+}
+
+@media only screen and (max-width: 1020px) {
+    #job-container {
+        width: 560px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    #job-container {
+        width: 300px;
+    }
+}
+
+@media only screen and (max-width: 300px) {
+    #job-container {
+        width: 250px;
+    }
+}

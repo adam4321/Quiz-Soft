@@ -1,0 +1,282 @@
+{{!-- Settings view - using express handlebars --}}
+
+<title>Quiz Soft | Ranking</title>
+<link type="text/css" rel="stylesheet" href="css/ranking-page.css">
+
+{{!-- Container for the dashboard --}}
+<div id="top-row-container">
+  
+    {{#if this.rankings}}
+
+        {{!-- If the user has postings --}}
+        <div id="dashboard-container" class="mdl-card mdl-shadow--2dp">
+
+            <div class="mdl-card__title mdl-color-text--white dashboard-top-bar">
+                <h2 class="mdl-card__title-text">Ranking</h2>
+            </div>
+
+            <div class="mdl-card__supporting-text mdl-color-text--grey-600 posting-content">
+                <p id="title-div">{{title}}</p>
+
+
+                <div id="back-div">
+                    <p id="back-txt">Job Postings</p>
+                    <button id="back-btn" class="btn-style" onclick="goBack()">Back</button>
+                </div>
+
+                <div id="graphic-div">
+                    <p id="graphic-txt">Quiz Metrics</p>
+                    <div class="pi-link" class="material-icons" onclick="graphicLink(`{{_id}}`)"><img  id="pi-image" src="images/pie_chart.svg" alt="email logo"><span class="tooltiptext">Visualize Responses</span></div>
+                </div>
+
+                
+        
+                {{!-- Display No postings OR Table that displays the user's postings --}}
+                <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" id="recordTable">
+                    <p id="row-msg"><i>Click a row to display the quiz</i></p>
+                    <thead>
+                        <tr>
+                            <th class="mdl-data-table__cell--non-numeric quiz-rank">Rank</th>
+                            <th class="mdl-data-table__cell--non-numeric">Email</th>
+                            <th class="mdl-data-table__cell--non-numeric">Score</th>
+                            <th class="mdl-data-table__cell--non-numeric">Time</th>
+                        </tr>
+                    </thead>
+
+                    {{!-- The rankings table body --}}
+                    <tbody id="table-body">
+                        
+                        {{#each rankings}}
+                            <tr id="rowModal{{@index}}">
+                                <td>
+                                    <div class="quiz-rank">{{inc @index}}</div>
+                                </td>
+
+                                <td class="mdl-data-table__cell--non-numeric">
+                                    <div class="email-txt">{{candidate_email}}</div>
+                                </td>
+
+                                <td class="user-numbers mdl-data-table__cell--non-numeric">
+                                    <div >{{round quizScore}}%</div>
+                                </td>
+
+                                <td class="user-numbers mdl-data-table__cell--non-numeric">
+                                    <div >{{quizTotalTime}} min</div>
+                                </td>
+                            </tr>
+
+
+                            {{!-- The Modal --}}
+                            <div id="modal{{@index}}" class="modal">
+                                {{!-- Modal content --}}
+                                <div class="modal-content square-card mdl-card--expand mdl-shadow--2dps mdl-color-text--black-600">
+                                    <span class="close">&times;</span>
+                                    {{#with ../associatedQuiz.quiz}}
+                                        <fieldset>
+                                            <h5><b>Job Posting: </b>{{../../title}}</h5>
+                                            <h6><b>Quiz Name: </b>{{this.name}}</h6>
+                                            <h6><b>Email: </b>{{../candidate_email}}</h6>
+                                            <h6><b>Time Used: </b>{{../quizTotalTime}} minutes</h6>
+                                            <h6><b>Score: </b>{{round ../quizScore}}%</h6>
+                                        </fieldset>
+                                        <hr>
+                                    {{/with}}
+
+                                    {{!-- Iterate through each question and display with respect to quizType --}}
+                                    {{#each candidateAnswers}}
+                                        <div>
+                                        <fieldset>
+                                            <h5>Q{{inc @index}}</h5>
+                                            <p>
+
+                                            {{#with (lookup ../../associatedQuiz.quiz.questions @index)}}
+                                            
+                                                {{!--  Multiple choice question --}}
+                                                {{#if (eq this.quizType "mult-choice")}}
+                                                    <label><i>{{this.quizQuestion}}</i></label>
+                                                    </br>
+                                                    {{#each this.quizAnswers}}                                      
+                                                        <input type = "radio"
+                                                            class = "mult-choice"
+                                                            disabled
+                                                            {{#if (eq_str_num ../../this.[0] @index)}}
+                                                                checked
+                                                            {{/if}}
+                                                        />
+                                                        <label for = "Q{{@q_index}}_{{this.a_index}}">
+                                                            {{this}}
+                                                        </label>
+                                                        </br>
+                                                    {{/each}}
+                                                    <input 
+                                                        type="radio" 
+                                                        style="display:none;" 
+                                                        name="{{@q_index}}" 
+                                                        id="default-mult-choice" 
+                                                        class="mult-choice" value=""
+                                                    />
+                                                    {{#if (eq_str_num ../this.[0] this.quizKey.[0])}}
+                                                        <p class="correct">Correct!</p>
+                                                    {{else}}
+                                                        <p class="incorrect">Incorrect! The answer is 
+                                                            {{lookup this.quizAnswers this.quizKey.[0]}}
+                                                        </p>
+                                                    {{/if}}
+                                                {{/if}}
+
+                                                {{!-- True / False question --}}
+                                                {{#if (eq this.quizType "true-false")}}
+                                                    <label><i>{{this.quizQuestion}}</i></label>
+                                                    </br>
+                                                    <input type = "radio"
+                                                        class = "true-false"
+                                                        disabled
+                                                        {{#if (eq ../this.[0] 'true')}}
+                                                            checked
+                                                        {{/if}}
+                                                    />
+                                                    <label for = "Q{{@q_index}}_0">True</label>
+                                                    </br>
+                                                    <input type = "radio"
+                                                        class = "true-false"
+                                                        disabled
+                                                        {{#if (eq ../this.[0] 'false')}}
+                                                            checked
+                                                        {{/if}}
+                                                    />
+                                                    <label for = "Q{{@q_index}}_1">False</label>
+                                                    </br>
+                                                    {{#if (eq_str_num ../this.[0] this.quizKey.[0])}}
+                                                        <p class="correct">Correct!</p>
+                                                    {{else}}
+                                                        <p class="incorrect">Incorrect! The answer is 
+                                                            {{capitalize this.quizKey.[0]}}
+                                                        </p>
+                                                    {{/if}}
+                                                {{/if}}
+
+                                                {{!-- Fill in the blank question --}}
+                                                {{#if (eq this.quizType "fill-blank")}}
+                                                    <label>
+                                                        <i>{{this.quizQuestion.[0]}} </i>___<i> {{this.quizQuestion.[1]}}</i>
+                                                    </label>
+                                                    </br>   
+                                                    <input type = "text"
+                                                        class = "fill-blank"
+                                                        disabled
+                                                        value = "{{../this.[0]}}"
+                                                    /></br>
+                                                    {{#if (eq_str_num_all_cases ../this.[0] this.quizKey.[0])}}
+                                                        <p class="correct">Correct!</p>
+                                                    {{else}}
+                                                        <p class="incorrect">Incorrect! The answer is 
+                                                            {{this.quizKey.[0]}}
+                                                        </p>
+                                                    {{/if}}
+                                                {{/if}}
+
+                                                {{!-- Check All question --}}
+                                                {{#if (eq this.quizType "check-all")}}
+                                                    <label><i>{{this.quizQuestion}}</i></label></br>
+                                                    {{#each this.quizAnswers}}
+                                                        <input type = "checkbox"
+                                                            class = "check-all"
+                                                            disabled
+                                                            {{#each ../../this}}
+                                                                {{#if (eq_str_num this @../index)}}
+                                                                    checked
+                                                                {{/if}}
+                                                            {{/each}}
+                                                        />
+                                                        <label >{{this}}</label></br>
+                                                    {{/each}}
+                                                    {{#if (eq_arr ../this this.quizKey)}}
+                                                        <p class="correct">Correct!</p>
+                                                    {{else}}
+                                                        {{#if (eq_str_num this.quizKey.length 1)}}
+                                                            <p class="incorrect">Incorrect! The answer is
+                                                                {{#each this.quizKey}}
+                                                                    {{lookup ../this.quizAnswers this}}
+                                                                {{/each}}
+                                                            </p>
+                                                        {{else}}
+                                                            <p class="incorrect">Incorrect! The answers are
+                                                                {{#each this.quizKey}}
+                                                                    {{#if (eq_str_num @index (dec ../this.quizKey.length))}}
+                                                                        and {{lookup ../this.quizAnswers this}}
+                                                                    {{else}}
+                                                                        {{lookup ../this.quizAnswers this}},
+                                                                    {{/if}}
+                                                                {{/each}}
+                                                            </p>
+                                                        {{/if}}
+                                                    {{/if}}
+                                                {{/if}}
+
+                                            {{/with}}
+                                            </p>
+                                        </fieldset>
+                                        </div>
+                                    {{/each}}
+
+                                    {{!-- Comment box --}}
+                                    <hr>
+                                    <div 
+                                        id="quiz-comment-container" 
+                                        class="square-card mdl-card--expand mdl-card mdl-shadow--2dp"
+                                    >
+                                        <fieldset>
+                                            <label>Optional Comments:</label>
+                                            </br>
+                                            <textarea 
+                                                id="quiz-comment" 
+                                                name="comment" 
+                                                rows="10" 
+                                                cols="30"
+                                            >{{quizComment}}</textarea>
+                                            </br>
+                                        </fieldset>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+                        {{/each}}
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    {{else}}
+
+        {{!-- No quizzes --}}
+        <div id="dashboard-container" class="mdl-card mdl-shadow--2dp">
+
+            <div class="mdl-card__title mdl-color-text--white dashboard-top-bar">
+                <h2 class="mdl-card__title-text">Ranking</h2>
+            </div>
+
+            <div class="mdl-card__supporting-text mdl-color-text--grey-600 no-posting-content">
+                <p id="title-div">{{title}}</p>
+
+                <div id="back-div">
+                    <p id="back-txt">Job Postings</p>
+                    <button id="back-btn" class="btn-style" onclick="goBack()">Back</button>
+                </div>
+
+                <hr id="no-posting-break">
+                <div id="no-posting-div">
+                    <img id="question-logo" src="images/logo.png"/>
+                    <p id="no-posting-txt">No Rankings Yet</p>
+                </div>
+
+            </div>
+        </div>
+   
+    {{/if}}
+
+</div>
+
+<script src="js/ranking-client.js"></script>

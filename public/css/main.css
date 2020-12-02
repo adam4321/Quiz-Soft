@@ -1,0 +1,223 @@
+/******************************************************************************
+**  Description:    Overall CSS styles
+******************************************************************************/
+
+/* Overall page settings --------------------------------------------------- */
+
+a {
+    text-decoration: none;
+}
+
+.textarea-label {
+    vertical-align: top;
+}
+
+
+/* Header bar settings ----------------------------------------------------- */
+
+#top-bar {
+    min-height: 91px;
+    margin-bottom: 5px;
+    overflow: hidden;
+    background-color: rgb(49, 166, 202);
+    padding: 20px 0 15px 0;
+}
+
+#logo {
+    height: 50px;
+    margin-top: -7px;
+    margin-left: -13px;
+}
+
+#timer-logo {
+    height: 50px;
+    margin-top: -7px;
+    -webkit-border-radius: 35%;
+    -moz-border-radius: 35%;
+    -ms-border-radius: 35%;
+    border-radius: 35%; 
+}
+
+#page-title {
+    text-decoration: none;
+    display: inline-block;
+    color: #ebb54b;
+    margin-top: 17px;
+    font-size: 35px;
+    font-weight: 800;
+}
+
+#timer-header {
+    text-decoration: none;
+    display: inline-block;
+    color: #ffffff;
+    margin-top: 17px;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+#timer-text {
+    text-decoration: none;
+    display: inline-block;
+    color: #ffffff;
+    border-style: solid;
+    border-width: 6px;
+    margin-top: 17px;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+label {
+    margin-left: 5px;
+    display: inline;
+}
+
+.page-links {
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    margin-right: 40px;
+}
+
+.page-links:hover {
+    color: rgb(224, 224, 224);
+}
+
+#logout-button {
+    background-color: #f0efef;
+}
+
+#logout-button:hover {
+    background-color: #cac7c7;
+}
+
+.mdl-layout__drawer-button {
+    padding-top: 20px;
+}
+
+.material-icons {
+    color: white;
+}
+
+
+/* Drawer settings --------------------------------------------------------- */
+  
+.mdl-layout__drawer.is-visible {
+    left: 0;
+    width: 200px;
+}
+
+#logout-button-drawer {
+    background-color: #e0e0e0;
+    width: 75%;
+    margin: 30px auto 0px auto;
+}
+
+#logout-button-drawer:hover {
+    background-color: #cac7c7;
+}
+
+
+/* Component Box settings -------------------------------------------------- */
+
+.mdl-layout__content {
+    width: 100%;
+}
+
+.page-content {
+    margin: 1.7%;
+}
+
+.radio-input {
+    width: 20px !important;
+}
+
+.radio-label {
+    width: 30px !important;
+    margin-right: 20px !important;
+}
+
+legend {
+    display: none;
+}
+
+.mdl-card__supporting-text {
+    padding: 25px !important;
+}
+
+select {
+    width: 311.6px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 120px 330px;
+    grid-column-gap: 15px;
+}
+
+.checkbox-container {
+    border: 1px solid #808080;
+    border-radius: 2px;
+    background-color: #fff;
+    margin: 5px 0 5px 4px;
+    width: 310px;
+    overflow: scroll;
+    height: 90px;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.checkbox-input {
+    width: 10px !important;
+}
+
+.mdl-grid.center-items {
+    justify-content: center;
+}
+
+
+/* Spacing for the submission button spinner animation --------------------- */
+
+.mdl-spinner {
+    margin-bottom: -10px;
+    margin-left: 25px;
+}
+
+.inline-btn-msg {
+    display: inline-block;
+}
+
+
+/* Submit buttons ------------------------------------------------------------- */
+
+.submitBtn {
+    cursor: pointer;
+}
+
+.div-label {
+    padding-top: 5px;
+}
+
+.btn-space {
+    margin-right: 15px;
+}
+
+/* Main container ---------------------------------------------------------- */
+
+#dashboard-container {
+    margin: auto;
+    width: 100%;
+}
+
+.dashboard-top-bar {
+    background-color: rgb(49, 166, 202);
+}
+
+
+/* Media queries ----------------------------------------------------------- */
+
+@media only screen and (max-width: 600px) {
+    .page-content {
+        margin-top: 5px;
+    }
+}

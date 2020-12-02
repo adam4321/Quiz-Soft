@@ -1,0 +1,208 @@
+/******************************************************************************
+**  Description: QUIZ BUILDER PAGE - css file for the page
+******************************************************************************/
+
+/* Timer settings */
+
+#timer-header {
+    color:  rgb(66,66,66);
+    margin-left: 20px;
+}
+
+#timer-text {
+    color: rgb(66,66,66);
+    border: 2px solid  rgb(54, 53, 53);
+    padding: 6px 5px 0px 10px;
+    min-width:100px; 
+    height:40px;
+}
+
+#timer-div {
+    width: 480px;
+    margin: 10px auto 0 auto;
+    border: 2px solid  rgb(66,66,66);
+    padding: 0px 10px 0px 10px;
+}
+
+#timer-logo {
+    margin-bottom: 10px;
+}
+
+
+/* Start button */
+
+#start-btn {
+    background-color: #ebb54b;
+    color: rgb(66,66,66);
+    display: block;
+    margin: 80px auto 0 auto;
+    width: 100px;
+    font-size: 18px;
+}
+
+#start-btn:hover {
+    background-color: #d4a037;
+}
+
+
+/* Quiz container */
+
+#dashboard-container {
+    width: 730px;
+}
+
+#quiz-container{
+    margin: 30px auto 30px auto;
+    width: 730px;
+    text-align: center;
+}
+
+#exit_btn {
+    margin: -19px auto -5px auto;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.76);
+}
+
+#question-count-label {
+    font-size: large;
+    display: inline-block;
+    margin: 7px 5px 7px 0px;
+}
+
+#question-count {
+    font-size: large; 
+    display: inline-block;
+    
+}
+
+#question-prompt {
+    margin: 40px 0px 20px 0px;
+}
+
+.question-btn {
+    background-color: #ebb54b;
+    font-size: 10px;
+    margin-right: 3px;
+    margin-bottom: 20px;
+}
+
+.questionNum {
+    font-size: large;
+}
+
+.question_input{
+    display: block;
+    margin: 0px auto 20px auto;
+}
+
+.complete-button {
+    margin: 20px 10px 0px 0px;
+}
+
+.deleteBtn {
+    cursor: pointer;
+}
+
+.mdl-button--fab.mdl-button--mini-fab {
+    height: 23px;
+    min-width: 23px;
+    width: 23px;
+    margin: 0px 0px 2px 10px;
+}
+
+.plusSign {
+    color: black;
+}
+
+.minusSign {
+    color: black;
+    margin-top: -11px;
+    font-size: 42px;
+    font-weight: lighter;
+}
+
+#answerBox {
+    display: block;
+    margin: 35px auto 20px auto;
+}
+
+#answerBox1 {
+    margin-top: 35px;
+}
+
+.answer_input {
+    margin-bottom: 5px;
+}
+
+.ansBoxCheckAll {
+    margin: 0px auto 5px auto;
+}
+
+#ansBoxCheckAllFirst {
+    margin: 20px auto 5px auto;
+}
+
+#submit-btn {
+    margin: 0px auto -15px auto;
+    color: rgb(66,66,66);
+    background-color:  #ebb54b;
+    width: 130px;
+    font-size: 12px;
+}
+
+#submit-btn:hover {
+    background-color:  #ce9b36;
+}
+
+#quiz_display_container {
+    display: block;
+    align-items: center;
+    width: auto;
+}
+
+#quiz_display_table {
+    margin:auto;
+}
+
+#quiz_display {
+    display: block;
+    width: auto;
+}
+
+
+/* Media queries ----------------------------------------------------------- */
+
+@media only screen and (max-width: 1020px) {
+    #quiz-container {
+        max-width: 95%;
+    }
+
+    #dashboard-container {
+        max-width: 95%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    #timer-div {
+        width: 280px;
+        font-size: 12px;
+    }
+
+    #timer-logo {
+        margin-left: 40px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    #logo-container {
+        margin-left: -15px;
+    }
+
+    #quiz-container {
+        max-width: 100%;
+    }
+
+    .square-card {
+        width: 100%;
+    }
+}

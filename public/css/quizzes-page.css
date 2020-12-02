@@ -1,0 +1,321 @@
+/******************************************************************************
+**  Description: MY QUIZZES PAGE - css file for the page
+******************************************************************************/
+
+#dashboard-container {
+    max-width: 730px;
+}
+
+#dashboard-container-empty {
+    width: 730px;
+    margin: auto;
+    padding-right: 0;
+}
+
+.quiz-content {
+    width: 93%;
+}
+
+.no-quiz-content {
+    width: 93%;
+}
+
+#profile-image {
+    height: 35px; 
+    border-radius: 50%; 
+    margin: 1px 0px 10px 5px;
+}
+
+#profile-image-new {
+    height: 35px; 
+    border-radius: 50%; 
+    margin: 1px 4px 10px 5px;
+}
+
+#profile-div {
+    display: inline-block;
+    max-width: 100%;
+}
+
+#profile-email {
+    font-size: medium; 
+    font-weight: bold; 
+    display: inline-block;
+    margin: 11px 0px 0px 0px;
+}
+
+/* Add extra margin when rendered using JavaScript */
+#profile-email-empty {
+    font-size: medium; 
+    font-weight: bold; 
+    display: inline-block;
+    margin: 11px 0px 0px 4px;
+}
+
+#upload-div {
+    float: right;
+    margin: 0 0 8px 0;
+}
+
+#upload-txt {
+    margin: 12px 0 0 0;
+    font-size: medium; 
+    font-weight: bold; 
+    display: inline-block;
+}
+
+#upload-btn {
+    display: inline-block;
+    margin: 7px 0px 0 19px;
+    height: 17px;
+    width: 70px;
+    text-align: center;
+}
+
+#upload-btn-new {
+    display: inline-block;
+    margin: 7px 0px 0 23px;
+    height: 17px;
+    width: 70px;
+    text-align: center;
+}
+
+
+/* QUIZ MODAL -------------------------------------------------------------- */
+
+/* The Modal (background) */
+.modal {
+    display: none;      /* Hidden by default */
+    position: fixed;    /* Stay in place */
+    z-index: 1;         /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;        /* Full width */
+    height: 100%;       /* Full height */
+    overflow: auto;     /* Enable scroll if needed */
+    background-color: rgb(0,0,0);       /* Fallback color */
+    background-color: rgba(0,0,0,0.4);  /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 130px auto 0px auto;       /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 2px;
+    width: 660px;             /* Could be more or less, depending on screen size */
+    text-align: center;
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Change the arrow to a pointer when hovering over the table rows */
+td:hover {
+    cursor: pointer;
+}
+
+
+/* Table styling ----------------------------------------------------------- */
+
+#row-msg {
+    margin: 25px 0 -10px 135px;
+    font-size: 12px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+#recordTable {
+    margin-top: 10px;
+    width: 200px;
+}
+
+.user-numbers {
+    text-align: center;
+}
+
+.btn-style {
+    background-color: #ebb54b;
+    font-weight: 100;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: rgb(66,66,66);
+    border: none;
+    cursor: pointer;
+    border-radius: 2px;
+    width: 85px;
+    margin-top: 10px;
+    padding: 5px;
+}
+
+.btn-style:hover {
+    background-color: #c7942d;
+}
+
+.quiz-name {
+    width: 125px;
+    overflow: hidden;
+}
+
+.quiz-category {
+    width: 110px;
+    overflow: hidden;
+}
+
+
+/* Style tables with no quizzes -------------------------------------------- */
+
+#no-quiz-div {
+    width: 270px;
+    margin: 70px auto 40px auto;
+}
+
+#question-logo {
+    height: 50px;
+    display: inline-block;
+    margin-top: -10px;
+}
+
+#no-quiz-txt {
+    display: inline-block;
+    font-size: 22px;
+    color: #ebb54b;
+}
+
+
+/* Media queries for tablets ----------------------------------------------- */
+
+@media only screen and (max-width: 775px) {
+    #dashboard-container {
+        width: 95%;
+    }
+
+    #dashboard-container-empty {
+        width: 730px;
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+        width: 60%;
+    }
+
+    .no-quiz-content {
+        width: 93%;
+    }
+
+    .quiz-name {
+        width: 95px;
+    }
+    
+    .quiz-category {
+        width: 75px;
+    }
+
+    #upload-div {
+        margin: 0 0 8px 0;
+    }
+}
+
+
+/* Media queries for vertical mobile phones -------------------------------- */
+
+@media only screen and (max-width: 600px) {
+    #dashboard-container {
+        width: 100%;
+    }
+
+    .mdl-card__supporting-text {
+        width: 100%;
+        padding: 0px 0px 8px 3px !important;
+    }
+
+    #profile-div {
+        display: block;
+        text-align: center;
+        position: relative;
+        margin: 5px auto 5px auto;
+        padding-right: 25px;
+    }
+
+    #profile-image {
+        margin: -5px 0px 5px 0;
+    }
+
+    #profile-email {
+        margin: 0px 0px 5px 0px;
+    }
+
+    #profile-image-new {
+        margin: -5px 4px 5px 0;
+    }
+    
+    #profile-email-empty {
+        margin: 0px 0px -15px 0px;
+    }
+
+    #no-quiz-div {
+        margin: 60px auto 30px auto;
+    }
+
+    .quiz-content {
+        margin: 15px auto 0px auto;
+    }
+
+    .no-quiz-content {
+        margin: 15px auto 10px auto;
+    }
+
+    #upload-div {
+        float: none;
+        width: 225px;
+        margin: 10px auto 15px auto;
+    }
+
+    #row-msg {
+        font-size: 10px;
+        margin-top: 25px;
+        margin-left: 100px;
+    }
+
+    #no-quiz-break {
+        width: 88%;
+        margin-left: 5%;
+    }
+
+    #table-body {
+        font-size: 8px;
+    }
+
+    .quiz-name {
+        width: 105px;
+    }
+
+    .btn-style {
+        font-size: 8px;
+        width: 55px;
+    }
+
+    #upload-btn {
+        font-size: 12px;
+    }
+    
+    #upload-btn-new {
+        font-size: 12px;
+    }
+}

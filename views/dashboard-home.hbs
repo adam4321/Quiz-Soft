@@ -1,0 +1,133 @@
+{{!-- Home dashboard view - using express handlebars --}}
+
+<title>Quiz Soft | Home</title>
+<link type="text/css" rel="stylesheet" href="css/dashboard-home.css">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+{{!--getmdl-select>--}}  
+<link rel="stylesheet" href="css/getmdl-select.min.css">
+<script defer src="js/getmdl-select.min.js"></script>
+
+<div id="modal" class="modal">
+    {{!-- Modal content --}}
+    <div class="modal-content square-card mdl-card--expand mdl-shadow--2dps mdl-color-text--black-600">
+        <div id="status-container" style="display:block;" class="mdl-card__supporting-text mdl-color-text--grey-600"><h5>Sending Mail<div class="spinning-mail" ></div> </h5></div>
+    </div>
+</div>
+
+{{!-- Container for the dashboard --}}
+<div id="top-row-container">
+    <div id="dashboard-container" class="mdl-card mdl-shadow--2dp">
+
+        <div class="mdl-card__title mdl-color-text--white dashboard-top-bar">
+            <h2 class="mdl-card__title-text">Home</h2>
+        </div>
+
+        <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+            <img id="profile-image" src={{photo}}>
+            <p id="profile-email">{{email}}</p>
+            <hr>
+        
+            <h6 id="submit-msg">Send a one-time quiz link to a job candidate</h6>
+            <div id="email-form-container" class="demo-card-wide mdl-card mdl-shadow--2dp mdl-grid center-items">
+                <div id="email-form-inner" class="mdl-card__supporting-text">
+                    <form id="test_sendgrid" action="/quiz_soft/dashboard/sendmail" method="post">
+                        <div id="jobposting_div">
+                            <div class="mdl-textfield mdl-js-textfield getmdl-select">
+                                <input type="text" value="" class="mdl-textfield__input" id="jobposting" readonly>
+                                <input type="hidden" value="" name="jobposting" mandatory/>           
+                                <label for="jobposting" class="mdl-textfield__label">Job Posting</label>
+                                <ul for="jobposting" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+                                    {{#each_jobposting jobposting}}
+                                        {{#if (eq @j_index 0)}}
+                                            <li class="mdl-menu__item" data-val="{{job_id_expose this}}<,> {{job_title_expose this}}<,> {{job_message_expose this}}<,> {{job_quiz_expose this 0}}" data-selected="true">{{job_title_expose this}}</li>
+                                        {{else}}
+                                            <li class="mdl-menu__item" data-val="{{job_id_expose this}}<,> {{job_title_expose this}}<,> {{job_message_expose this}}<,> {{job_quiz_expose this 0}}">{{job_title_expose this}}</li>
+                                        {{/if}}
+                                    {{/each_jobposting}}
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div id="name_div">
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class="mdl-textfield__input" type="text" id="first" name="first" mandatory>
+                                <label class="mdl-textfield__label" for="first">Candidate First Name</label>
+                            </div>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class="mdl-textfield__input" type="text" id="last" name="last" mandatory>
+                                <label class="mdl-textfield__label" for="last">Candidate Last Name</label>
+                            </div>
+                        </div>
+
+                        <div id="email_div">
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class="mdl-textfield__input" type="email" name="email" id="email" mandatory>
+                                <label class="mdl-textfield__label" for="email">Candidate E-mail</label>
+                                <span class="mdl-textfield__error">Enter a valid email!</span>
+                            </div>
+                        </div>
+                        
+                        <fieldset>
+                            <button 
+                                type='submit' 
+                                id='submit_email' 
+                                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+                            >Submit</button>
+                        </fieldset>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <div id="inbox-container" class="mdl-card mdl-shadow--2dp">
+
+        <div class="mdl-card__title mdl-color-text--white dashboard-top-bar">
+            <h2 class="mdl-card__title-text">Inbox</h2>
+        </div>
+
+        <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+        <!-- Number badge on icon -->
+            {{#if (eq missedMessages 0)}}
+                <a href="/quiz_soft/job_postings">
+                    <div id="inbox-image" class="material-icons">
+                        <img  id="email-logo" src="images/email-black-48dp.svg" alt="email logo">
+                    </div>
+                </a>
+            {{else}}
+                <a href="/quiz_soft/job_postings">
+                    <div id="inbox-image" class="material-icons mdl-badge mdl-badge--overlap" data-badge="{{missedMessages}}">
+                        <img  id="email-logo" src="images/email-black-48dp.svg" alt="email logo">
+                    </div>
+                </a>
+            {{/if}}
+            <br>
+            <p id="inbox-msg">Click the mail icon to view job postings and responses</p>
+        </div>
+    </div>
+    <br>
+    
+    <div id="account-container" class="mdl-card mdl-shadow--2dp">
+
+        <div class="mdl-card__title mdl-color-text--white dashboard-top-bar">
+            <h2 class="mdl-card__title-text">Account</h2>
+        </div>
+
+        <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+            <button 
+                id="removeUserButton" 
+                type="submit" 
+                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+            >Delete Account</button>
+
+            <p id="delete-msg">Remove your data and account</p>
+        </div>
+    </div>
+
+
+</div>
+  
+<script src="js/dashboard-home-client.js"></script>

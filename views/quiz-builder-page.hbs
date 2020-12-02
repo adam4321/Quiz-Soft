@@ -1,0 +1,66 @@
+{{!-- Home dashboard view - using express handlebars --}}
+
+<title>Quiz Soft | Quiz Builder</title>
+<link type="text/css" rel="stylesheet" href="css/quiz-builder-page.css">
+
+{{!-- Container for the dashboard --}}
+<div id="top-row-container">
+    <div autofocus id="dashboard-container" class="mdl-card mdl-shadow--2dp">
+
+        <div class="mdl-card__title mdl-color-text--white dashboard-top-bar">
+            <h2 class="mdl-card__title-text">Quiz Builder</h2>
+        </div>
+
+        <div id="quiz-container">
+            <!--Unwritten route in action -->
+            <form id="quiz_form" action="/quiz_soft/quiz_create/save_quiz">
+
+                <!-- Exit quiz button -->
+                <button 
+                    id="exit_btn" 
+                    class="mdl-button mdl-js-button mdl-button--raised  mdl-button--colored"
+                > 
+                    Cancel Build
+                </button>
+                <hr>
+
+                <p id="question-count-label">Question Count is <div id="question-count"></div></p>
+                <hr>
+
+                <!-- Display of questions -->
+                <div class="mdl-card__title" id="quiz_display_container">
+                    <table id="quiz_display_table" class="mdl-data-table mdl-js-data-table">
+                        <tbody id="quiz_display">
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <p id="question-prompt" style="font-size: large;">Choose Question Type</p>
+                
+
+                <!-- 4 Question Buttons -->
+                <button id="true_false_btn" class="mdl-button mdl-js-button mdl-button--raised  mdl-button--colored question-btn"> 
+                    True | False
+                </button>
+
+                <button id="multiple_c_btn" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored question-btn"> 
+                    Multiple Choice
+                </button>
+
+                <button id="fill_in_btn" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored question-btn"> 
+                    Fill in the Blank
+                </button>
+
+                <button id="choose_all_btn" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored question-btn"> 
+                    All That Apply
+                </button>
+
+            </form>
+        </div> 
+    </div>
+</div>
+<div id="scroll-target"></div>
+
+<script src="js/quiz-builder-client.js"></script>
+

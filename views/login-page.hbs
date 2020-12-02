@@ -1,0 +1,32 @@
+{{!-- Login page view - using express handlebars --}}
+
+<title>Quiz Soft</title>
+<link type="text/css" rel="stylesheet" href="css/login-page.css">
+
+{{!-- Container for the dashboard --}}
+<div id="login-container" class="mdl-card mdl-shadow--2dp">
+
+    <div class="mdl-card__title mdl-color-text--white dashboard-top-bar">
+        <h2 class="mdl-card__title-text">Please Log In</h2>
+    </div>
+
+    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+
+        <p id="g-signin-text" class="signin-btn-text">
+            Sign in with Google
+        </p>
+        <img class="login-btns" id="g-signin" src="images/g_signin.png" alt="Google sign in button" onclick="google_auth();">
+
+        <hr id="break">
+        <p class="signin-btn-text">
+            Sign in with Facebook
+        </p>
+        <img class="login-btns" id="f-signin" src="images/f_signin.png" alt="Facebook sign in button" onclick="facebook_auth();">
+
+        <hr id="break">
+        <p id="attribution">Oregon State University CS-467</p>
+
+    </div>
+</div>
+
+<script src="js/login.js"></script>

@@ -1,0 +1,23 @@
+{{!-- Home dashboard view - using express handlebars --}}
+<title>Quiz Soft | Quiz</title>
+<link type="text/css" rel="stylesheet" href="../css/take-quiz-page.css">
+
+{{!-- Container for the quiz --}}
+    <div id="timer-div" class="container">
+        <div class="row justify-content-lg-center justify-content-md-center justify-content-sm-center justify-content-xs-center">
+            <div class="col-lg-auto col-md-auto col-sm-auto col-xs-auto">
+                <p id="timer-header" >Time Remaining </p> 
+                <img  id="timer-logo" src="../images/timer.png" alt="question mark logo">
+                <p id="timer-text"> {{timeLimit}}:00 </p>
+            </div>
+        </div>
+    </div>
+    <div class="mdl-layout-spacer"></div> 
+ 
+    <div id="start_quiz_div" class="square-card mdl-card--expand mdl-shadow--2dps mdl-color-text--black-600">
+        <button id="start-btn" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent question-btn">Start Quiz
+        </button>
+    </div>
+
+<script src="../js/moment.min.js"></script>
+<script src="../js/start-quiz-page-client.js"></script>

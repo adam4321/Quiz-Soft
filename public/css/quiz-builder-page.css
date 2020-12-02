@@ -1,0 +1,171 @@
+/******************************************************************************
+**  Description: QUIZ BUILDER PAGE - css file for the page
+******************************************************************************/
+
+#dashboard-container {
+    width: 960px;
+}
+
+#scroll-target {
+    height: 30px;
+}
+
+#quiz-container{
+    margin: 30px 0px 30px 0px;
+    text-align: center;
+}
+
+#exit_btn {
+    margin: -19px auto -5px auto;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.76);
+}
+
+#exit_btn:hover {
+    background-color: rgba(0, 0, 0, 0.87)
+}
+
+.question-list {
+    margin-bottom: 10px;
+}
+
+#question-count-label {
+    font-size: large;
+    display: inline-block;
+    margin: 7px 5px 7px 0px;
+}
+
+#question-count {
+    font-size: large; 
+    display: inline-block;
+    
+}
+
+#question-prompt {
+    margin: 40px 0px 20px 0px;
+}
+
+.question-btn {
+    font-size: 10px;
+    margin-right: 3px;
+    margin-bottom: 20px;
+}
+
+.mdl-button--raised.mdl-button--colored {
+    background-color: #ebb54b;
+}
+
+.mdl-button--raised.mdl-button--colored:hover {
+    background-color: #d8a236;
+}
+
+.questionNum {
+    font-size: large;
+}
+
+.question_input{
+    display: block;
+    margin: 0px auto 20px auto;
+}
+
+.complete-button {
+    margin: 20px 10px 0px 0px;
+}
+
+.deleteBtn {
+    cursor: pointer;
+    background-color: #f0efef;
+    font-size: 9px;
+    height: 33px;
+    
+}
+
+.mdl-button--fab.mdl-button--mini-fab {
+    height: 23px;
+    min-width: 23px;
+    width: 23px;
+    margin: 0px 0px 2px 10px;
+}
+
+.plusSign {
+    color: black;
+}
+
+.minusSign {
+    color: black;
+    margin-top: -11px;
+    font-size: 42px;
+    font-weight: lighter;
+}
+
+#answerBox {
+    display: block;
+    margin: 35px auto 20px auto;
+}
+
+#answerBox1 {
+    margin-top: 35px;
+}
+
+.answer_input {
+    margin-bottom: 5px;
+    align-items: center;
+}
+
+.ansBoxCheckAll {
+    margin: 0px auto 5px auto;
+}
+
+#ansBoxCheckAllFirst {
+    margin: 20px auto 5px auto;
+}
+
+#submit-btn {
+    margin: 0px auto -15px auto;
+    color: white;
+    background-color: rgb(49, 166, 202);
+    width: 130px;
+}
+
+#submit-btn:hover {
+    background-color: rgb(23, 133, 167);
+}
+
+#quiz_display_container {
+    display: block;
+    align-items: center;
+    width: auto;
+}
+
+table{
+    table-layout: fixed;
+    margin: auto;
+}
+
+td {
+    word-wrap:break-word;
+    white-space: normal;
+}
+
+#quiz_display {
+    display: block;
+    width: auto;
+}
+
+@media only screen and (max-width: 1020px) {
+    #dashboard-container {
+        width: 560px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    #dashboard-container {
+        width: 300px;
+    }
+}
+
+@media only screen and (max-width: 300px) {
+    #dashboard-container {
+        width: 250px;
+    }
+}

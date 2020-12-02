@@ -1,0 +1,120 @@
+{{!-- Home dashboard view - using express handlebars --}}
+<title>Quiz Soft | Quiz</title>
+<link type="text/css" rel="stylesheet" href="../../css/take-quiz-page.css">
+
+{{!-- Container for the quiz --}}
+<div id="dashboard-container">
+    <div id="timer-div" class="container">
+        <div class="row justify-content-lg-center justify-content-md-center justify-content-sm-center justify-content-xs-center">
+            <div class="col-lg-auto col-md-auto col-sm-auto col-xs-auto">
+                <p id="timer-header" >Time Remaining </p> 
+                <img  id="timer-logo" src="../../images/timer.png" alt="question mark logo">
+                <p id="timer-text"> {{timeLimit}}:00 </p>
+            </div>
+        </div>
+    </div>
+    <div class="mdl-layout-spacer"></div> 
+
+    <div id="quiz_elements">
+        <div autofocus id="quiz-container" class="mdl-card mdl-shadow--2dp">
+
+            <div class="mdl-card__title mdl-color-text--white dashboard-top-bar">
+                <h2 class="mdl-card__title-text">Quiz</h2>
+            </div>
+
+            <div id="quiz-container">
+                <form autocomplete="off" id="take_quiz" action="/quiz_soft/take_quiz" method="post">
+                    <div class="square-card mdl-card--expand mdl-shadow--2dps mdl-color-text--black-600">
+                        <fieldset>
+                            <h5><b>{{name}}</b></h5>
+                            <h6><b>Time:</b> {{timeLimit}} minutes</h6>
+                            <h6><b>Category:</b> {{category}}</h6>
+                            <h6><b>Number of questions:</b> {{questions.length}}</h6>
+                            <h6>Scroll to Bottom:<a href="javascript: document.body.scrollIntoView(false);">&darr;</a></h6>
+                        </fieldset>
+                    </div>
+                    <hr>
+
+                    {{!-- Iterate through each question and display with respect to quizType --}}
+                    {{#each_question questions questions.length}}
+                    <div style="margin:auto" class="square-card mdl-card--expand mdl-card mdl-shadow--2dp">
+                        <fieldset>
+                            <h5>Q{{inc @q_index}}</h5>
+                                <p>   
+                                {{#if (quiz_type_expose this "mult-choice")}}
+                                    <label><i>{{quiz_question_expose this 0}}</i></label></br>
+                                    {{#each this.quizAnswers}}                                         
+                                        <input type = "radio"
+                                            name = "{{@q_index}}"
+                                            id = "Q{{@q_index}}_{{@index}}"
+                                            class = "mult-choice"
+                                            value = "{{@index}}" />
+                                        <label for = "Q{{@q_index}}_{{@index}}">{{this}}</label></br>
+                                    {{/each}}
+                                    <input type="radio" style="display:none;" name="{{@q_index}}" id="default-mult-choice" class="mult-choice" value="" checked="checked"/>
+                                {{/if}}
+                                {{#if (quiz_type_expose this "true-false")}}
+                                    <label><i>{{quiz_question_expose this 0}}</i></label></br>
+                                        <input type = "radio"
+                                            name = "{{@q_index}}"
+                                            id = "Q{{@q_index}}_0"
+                                            class = "true-false"
+                                            value = "true" />
+                                        <label for = "Q{{@q_index}}_0">True</label></br>
+                                        <input type = "radio"
+                                            name = "{{@q_index}}"
+                                            id = "Q{{@q_index}}_1"
+                                            class = "true-false"
+                                            value = "false" />
+                                        <label for = "Q{{@q_index}}_1">False</label></br>
+                                        <input type="radio" style="display:none;" name="{{@q_index}}" id="default-tf" class="true-false" value="" checked="checked"/>
+                                {{/if}}
+                                {{#if (quiz_type_expose this "fill-blank")}}
+                                    <label><i>{{quiz_question_expose this 0}} </i>___<i> {{quiz_question_expose this 1}}</i></label></br>
+                                        <input type = "text"
+                                            name = "{{@q_index}}"
+                                            id = "Q{{@q_index}}_0"
+                                            class = "fill-blank"
+                                            value = "{{this.[0]}}" /></br>
+                                {{/if}}
+                                {{#if (quiz_type_expose this "check-all")}}
+                                    <label><i>{{quiz_question_expose this 0}}</i></label></br>
+                                    {{#each this.quizAnswers}}
+                                        <input 
+                                            type = "checkbox"
+                                            name = "{{@q_index}}"
+                                            id = "Q{{@q_index}}_{{@index}}"
+                                            class = "check-all"
+                                            value = "{{@index}}" 
+                                        />
+                                        <label for = "Q{{@q_index}}_{{@index}}">{{this}}</label></br>
+                                    {{/each}}
+                                    <input type="checkbox" style="display:none;" name="{{@q_index}}" id="default-check" class="check-all" value="" checked="checked"/>
+                                {{/if}}
+                            </p>
+                        </fieldset>
+                    </div>
+                    {{/each_question}}
+                    <hr>
+
+                    <div style="margin:auto;" class="square-card mdl-card--expand mdl-card mdl-shadow--2dp">
+                        <fieldset>
+                            <label>Optional Comments:</label></br>
+                                <textarea name="comment" rows="10" cols="30" style="maxlength:140; height:160px; width:250px"></textarea></br>
+                        </fieldset>
+                        <input id="timing_data" type="hidden" name="time" value="0"/>
+                    </div>
+                    <hr>
+
+                    <fieldset>
+                        <input id="submit-btn" type="submit" value="Submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored question-btn"/>
+                    </fieldset>
+                    
+                </form>
+            </div> 
+        </div>
+    </div>
+</div>
+
+<script src="../../js/moment.min.js"></script>
+<script src="../../js/take-quiz-page-client.js"></script>
