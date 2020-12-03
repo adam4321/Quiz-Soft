@@ -12,7 +12,7 @@ Then just call 'npm install' and call 'node app.js'!
 
 ### SIGNING IN
 
-The application can be reached at this [link](https://softwarecustomquiz.herokuapp.com/login).
+The application can be reached at this [link](https://adamjwright.com/quiz_soft/login).
 
 Two sign in options exist:
 1) Using your Google (Gmail) account
