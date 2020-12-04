@@ -2,11 +2,14 @@
 
 Software Quiz group project for Oregon State University. It is
 intended to replace Survey Monkey as a tool to email quizzes to
-job applicants.
+job applicants. The team members are Adam Wright, Kevin Hill, 
+and Adam Slusser.
 
 It can be run by cloning the project and then setting up the
-necessary Google Oauth2 credentials in the GCP dashboard and
-adding those credentials in a file called credentials.js.
+necessary Google and Facebook Oauth2 credentials in the GCP
+and Facebook developer dashboards and a connection to a MongoDb
+Atlas database and then adding those credentials in a file 
+called credentials.js.
 
 Then just call 'npm install' and call 'node app.js'!
 
@@ -114,6 +117,22 @@ view the quiz as a modal. There is a button available in each row to
 delete a quiz or to download a quiz. There is also a button on the
 page to upload a quiz which has previously been downloaded. The
 quizzes are saved with .quiz as the file extension.
+
+### JobPosting
+
+In this section you will be able to create a new job posting
+and add an existing quiz to it along with the body text that
+will be included in the email sent to the quiz taker. When
+there are job postings created it is possible to click on a
+row and look at the rankings of all of the quiz responses.
+The highest score will rank first and when scores are equal
+then the one submitted first will be ranked first. When you
+click on a row in a ranking, then it will display the user's
+answers with either correct or incorrect and the correct answer
+displayed. There is also a button in each ranking to disply
+a pie chart of the elapsed times for the submitted quizzes
+and a histogram of the scores of all of submission to that
+quiz.
 
 ## Released under MIT License
 
