@@ -100,11 +100,11 @@
 /* Modal Content/Box */
 .modal-content {
     background-color: #fefefe;
-    margin: 130px auto 0px auto;       /* 15% from the top and centered */
+    margin: 130px auto 50px auto;
     padding: 20px;
     border: 1px solid #888;
     border-radius: 2px;
-    width: 660px;             /* Could be more or less, depending on screen size */
+    width: 660px;
     text-align: center;
 }
 
