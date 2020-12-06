@@ -16,11 +16,15 @@ a {
 /* Header bar settings ----------------------------------------------------- */
 
 #top-bar {
-    min-height: 91px;
+    height: 100px;
     margin-bottom: 5px;
     overflow: hidden;
     background-color: rgb(49, 166, 202);
     padding: 20px 0 15px 0;
+}
+
+#top-bar-div {
+    height: 100px;
 }
 
 #logo {
@@ -216,8 +220,38 @@ select {
 
 /* Media queries ----------------------------------------------------------- */
 
+@media only screen and (max-width: 1024px) {
+    #top-bar {
+        height: 91px;
+    }
+}
+
 @media only screen and (max-width: 600px) {
     .page-content {
         margin-top: 5px;
+    }
+
+    .mdl-layout__header-row {
+        padding: 0 0 0 72px;
+    }
+
+    .mdl-layout__drawer-button {
+        padding-top: 10px;
+    }
+
+    #top-bar {
+        height: 70px;
+    }
+
+    #logo {
+        margin-top: -8px;
+    }
+
+    #page-title {
+        margin-bottom: 40px;
+    }
+
+    .mdl-card__title-text {
+        font-size: 19px;
     }
 }
