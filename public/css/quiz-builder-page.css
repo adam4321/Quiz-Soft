@@ -68,8 +68,19 @@
     margin: 0px auto 20px auto;
 }
 
+.question_instructions {
+    margin-top: 30px;
+    margin-bottom: 5px;
+}
+
 .complete-button {
     margin: 20px 10px 0px 0px;
+    width: 182px;
+}
+
+.cancel-button {
+    margin: 20px 10px 0px 0px;
+    width: 182px;
 }
 
 .deleteBtn {
@@ -100,7 +111,7 @@
 
 #answerBox {
     display: block;
-    margin: 35px auto 20px auto;
+    margin: 15px auto 20px auto;
 }
 
 #answerBox1 {
@@ -117,7 +128,7 @@
 }
 
 #ansBoxCheckAllFirst {
-    margin: 20px auto 5px auto;
+    margin: 10px auto 5px auto;
 }
 
 #submit-btn {
@@ -165,6 +176,22 @@ td {
 
     #dashboard-container {
         width: 300px;
+    }
+
+    .question_instructions {
+        font-size: 12px;
+    }
+
+    .ansBoxCheckAll {
+        margin-top: 0px;
+    }
+
+    .complete-button {
+        margin: 20px 0px 0px 0px;
+    }
+    
+    .cancel-button {
+        margin: 20px 0px 0px 0px;
     }
 }
 

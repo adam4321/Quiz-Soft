@@ -569,7 +569,7 @@ trueFalseBtn.addEventListener('click', (e) => {
 
     // Show the question cancel button
     let cancelBtn = document.createElement('button');
-    cancelBtn.className   = 'mdl-button mdl-js-button mdl-button--raised  mdl-button--colored complete-button';
+    cancelBtn.className   = 'mdl-button mdl-js-button mdl-button--raised  mdl-button--colored cancel-button';
     cancelBtn.textContent = 'Cancel Question';
     createBox.appendChild(cancelBtn);
 
@@ -694,7 +694,6 @@ multBtn.addEventListener('click', (e) => {
     let answerBox           = document.createElement('input');
     let answerLabel         = document.createElement('label');
     let answerInput         = document.createElement('textarea');
-    let lineBreak           = document.createElement('hr');
     let lineBreakLast       = document.createElement('br');
     lineBreakLast.id        = "appendBefore";
     answerBox.type          = 'radio';
@@ -706,12 +705,12 @@ multBtn.addEventListener('click', (e) => {
     answerInput.className   = 'answer_input';
     answerInput.placeholder = 'Answer in blank';
     answerInput.setAttribute('data-lpignore','true');
-    createBox.appendChild(lineBreak);
 
     // Give the user instructions
-    let instructions = document.createElement('p');
+    let instructions         = document.createElement('p');
+    instructions.className   = 'question_instructions';
+    instructions.textContent = 'Press + for more answers and - to remove them';
     createBox.appendChild(instructions);
-    instructions.textContent = 'Press + for more answers and - to remove them'
 
     // Add the + and - controls to createBox
     createBox.appendChild(btnContainer);
@@ -738,7 +737,7 @@ multBtn.addEventListener('click', (e) => {
 
     // Show the question cancel button
     let cancelBtn         = document.createElement('button');
-    cancelBtn.className   = 'mdl-button mdl-js-button mdl-button--raised  mdl-button--colored complete-button';
+    cancelBtn.className   = 'mdl-button mdl-js-button mdl-button--raised  mdl-button--colored cancel-button';
     cancelBtn.textContent = 'Cancel Question';
     createBox.appendChild(cancelBtn);
 
@@ -868,9 +867,9 @@ fillInBtn.addEventListener('click', (e) => {
 
     // Give the user instructions
     let instructions         = document.createElement('p');
-    let lineBreak            = document.createElement('hr');
+    // let lineBreak            = document.createElement('hr');
     instructions.textContent = 'Enter the answer which fills the blank'
-    createBox.appendChild(lineBreak);
+    // createBox.appendChild(lineBreak);
     createBox.appendChild(instructions);
 
     // Create the answer in the blank input
@@ -889,7 +888,7 @@ fillInBtn.addEventListener('click', (e) => {
 
     // Show the question cancel button
     let cancelBtn         = document.createElement('button');
-    cancelBtn.className   = 'mdl-button mdl-js-button mdl-button--raised  mdl-button--colored complete-button';
+    cancelBtn.className   = 'mdl-button mdl-js-button mdl-button--raised  mdl-button--colored cancel-button';
     cancelBtn.textContent = 'Cancel Question';
     createBox.appendChild(cancelBtn);
 
@@ -984,12 +983,9 @@ checkAllBtn.addEventListener('click', (e) => {
     questionBox.className   = 'question_input';
     createBox.appendChild(questionBox);
 
-    // Add line break before the answers
-    let lineBreak = document.createElement('hr');
-    createBox.appendChild(lineBreak);
-
     // Give the user instructions
     let instructions         = document.createElement('p');
+    instructions.className   = 'question_instructions';
     instructions.textContent = 'Press + for more answers and - to remove them'
     createBox.appendChild(instructions);
 
@@ -1099,7 +1095,7 @@ checkAllBtn.addEventListener('click', (e) => {
 
     // Show the question cancel button
     let cancelBtn         = document.createElement('button');
-    cancelBtn.className   = 'mdl-button mdl-js-button mdl-button--raised  mdl-button--colored complete-button';
+    cancelBtn.className   = 'mdl-button mdl-js-button mdl-button--raised  mdl-button--colored cancel-button';
     cancelBtn.textContent = 'Cancel Question';
     createBox.appendChild(cancelBtn);
 
