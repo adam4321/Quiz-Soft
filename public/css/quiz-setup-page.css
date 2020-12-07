@@ -25,6 +25,6 @@
 @media only screen and (max-width: 600px) {
     #dashboard-container {
         width: 250px;
-        margin-top: 40px;
+        margin-top: 10px;
     }
 }
