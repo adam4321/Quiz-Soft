@@ -3,9 +3,10 @@
 **
 **  Root path:  localhost:3500/take_quiz
 **
-**  Contains:   /
-**              /:token
-**
+**  Contains:   /:token
+**              /
+**              /:token/quiz
+**              /time_stamp
 ******************************************************************************/
 
 const express = require('express');
@@ -32,10 +33,8 @@ const JobPosting = require('../models/jobposting.js');
 const Candidate = require('../models/candidate.js');
 const Employer = require('../models/employer.js');
 
-// Get Scoring Algorithm
-var calc_score =  require('../score.js');
 
-/* START QUIZ - Function to render the start quiz button that candidate clicks ----------------------------- */
+/* START QUIZ - Function to render the start quiz page --------------------- */
 function renderStart(req, res, next) {
     var token = req.params.token;
     var decoded = jwt.decode(token, CRED_ENV.HASH_SECRET);
@@ -54,10 +53,10 @@ function renderStart(req, res, next) {
         console.error(err);
             res.status(404).render("404", context);
     });
-
 };
 
-/* TAKE QUIZ - Function to render quiz that candidate takes ----------------------------- */
+
+/* TAKE QUIZ - Function to render quiz that candidate takes ---------------- */
 function renderQuiz(req, res, next) {
     var token = req.params.token;
     var decoded = jwt.decode(token, CRED_ENV.HASH_SECRET);
@@ -119,7 +118,65 @@ function renderQuiz(req, res, next) {
 };
 
 
-/* SCORE QUIZ - Function to score the answers from the candidates choices ---------------------- */
+/* QUIZ SCORING - Function to score a submitted quiz ----------------------- */
+function calculate_score(quiz_obj, response_arr) {
+    return new Promise(function(resolve,reject) {
+        // Build key array
+        var key_length = Object.keys(quiz_obj.questions).length;
+        var key_arr = []; 
+
+        for (let i = 0; i < key_length; i++) {
+            key_arr[i] = quiz_obj.questions[i].quizKey;
+        }
+        var score = 100.0;
+        var simple_dec = (100.0 / key_length);
+
+        // Match the values of each respective question and determine the score
+        for (let j = 0; j < key_length; j++) {
+            let type = quiz_obj.questions[j].quizType;
+
+            if (response_arr[j] != undefined) {
+                if (type === 'true-false') {
+                    if (key_arr[j][0] != response_arr[j]) {
+                        score = score - simple_dec;
+                    }
+                }
+                else if (type === 'mult-choice') {
+                    if (key_arr[j][0] != response_arr[j]) {
+                        score = score - simple_dec;
+                    }
+                }
+                else if (type === 'fill-blank') {
+                    if (key_arr[j][0].toLowerCase() != response_arr[j].toLowerCase()) {
+                        score = score - simple_dec;
+                    }
+                }
+                else if (type === 'check-all') {
+                    let check_answers = 0;
+
+                    for (let y = 0; y < key_arr[j].length; y++) {
+                        for (let z = 0; z < response_arr[j].length; z++) {
+                            if (key_arr[j][y] == response_arr[j][z]) {
+                                check_answers += 1;
+                            }
+                        }
+                    }
+                    if ((check_answers != key_arr[j].length) || (response_arr[j].length != key_arr[j].length)) {
+                        score = score - simple_dec;
+                    }
+                }
+            }
+            else {
+                score = score - simple_dec;
+            }
+        }
+
+        resolve(score);
+    });
+}
+
+
+/* SUBMIT QUIZ - Function accept and score a quiz -------------------------- */
 function scoreQuiz(req, res, next) {
     let context = {};
     // Place comment and answers in context
@@ -134,8 +191,8 @@ function scoreQuiz(req, res, next) {
         context.layout = 'login';
         let response_arr = req.body;
 
-        // Score quiz
-        calc_score.calculate_score(job_obj.associatedQuiz[0].quiz, response_arr).then(function(score) {
+        // Score the submitted quiz
+        calculate_score(job_obj.associatedQuiz[0].quiz, response_arr).then(function(score) {
             // Put responses in array
             let candidate_answers = [];
 
@@ -256,7 +313,7 @@ function scoreQuiz(req, res, next) {
 };
 
 
-/* GENERATE TIME STAMP - Function to generate time stamp and put in session from page refresh to track how long page was refreshed ---------------------- */
+/* GENERATE TIME STAMP - Function to generate time stamp and maintain the timer on page refresh */
 function generateTimeStamp(req, res, next) {
     req.session.time_stamp = req.body.time_stamp;
 }
