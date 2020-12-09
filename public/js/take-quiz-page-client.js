@@ -7,7 +7,7 @@
 ******************************************************************************/
 
 /* Confirm back button page exit ------------------------------------------- */
-window.onbeforeunload = function(e) {
+window.onbeforeunload = (e) => {
     e.preventDefault();
     
     let refresh_check = localStorage.getItem('refresh_quiz_semaphore');
@@ -28,9 +28,8 @@ window.onbeforeunload = function(e) {
 
 
 /* Remove item on browser or tab close ------------------------------------------- */
-
-// Clear the local storage
-window.onunload = function() {
+window.onunload = () => {
+    // Clear the local storage
     localStorage.removeItem('start_quiz_semaphore');
 }
 
@@ -50,9 +49,8 @@ else {
 }
 
 
-/* =================== QUIZ DISPLAY FUNCTIONS ======================== */
-
-window.onload = function(e) {
+/* QUIZ TIMING - Function to load and maintain the auto timer -------------- */
+window.onload = (e) => {
     e.preventDefault();
 
     // Verify that the user has not attempted to return to quiz page after submission
@@ -86,8 +84,15 @@ window.onload = function(e) {
                 }
                 else {
                     let resume_time_str = ((time_check/60).toFixed(2).toString()).split('.');
-                    let seconds = (parseInt(resume_time_str[1]) * 0.6).toFixed(0); 
-                    timerElement.textContent = Math.floor(time_check/60)+':'+seconds;
+                    let seconds = (parseInt(resume_time_str[1]) * 0.6).toFixed(0);
+                     
+                    if (seconds > 9) {
+                        timerElement.textContent = Math.floor(time_check/60)+':'+seconds;
+                    }
+                    else {
+                        timerElement.textContent = Math.floor(time_check/60)+':0'+seconds;
+                    }
+
                     timerText = document.getElementById('timer-text').textContent.split(':');
                     TIME_LIMIT = (timerText[0] * 60000) + (timerText[1] * 600);
                 }
@@ -158,11 +163,8 @@ window.onload = function(e) {
 };
 
 
-/* =================== QUIZ POST VALIDATION FUNCTIONS ======================== */
-document.getElementById("take_quiz").onsubmit = function() {verifyResponses()};
-
 /* SUBMIT form - Function to verify responses before posting -------------- */
-var verifyResponses = function() {
+document.getElementById("take_quiz").onsubmit = () => {
     let el_checks = document.querySelectorAll('input[class="check-all"]:not([id="default-check"])');
     let prev_name = "";
     let curr_name = "";
