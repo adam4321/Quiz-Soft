@@ -13,7 +13,7 @@ called credentials.js.
 
 Then just call 'npm install' and call 'node app.js'!
 
-### SIGNING IN
+### Signing In
 
 The application can be reached at this [link](https://adamjwright.com/quiz_soft/login).
 
@@ -25,7 +25,20 @@ Click on the option of your choice and accept the conditions from
 your choice of login. Upon return to the site you will be at the 
 site's homepage. You will be greeted with a greetings message 
 with your name and the email linked to the login method that you
-chose. 
+chose.
+
+### Homepage
+
+On the homepage the user can email a quiz link to anyone. First
+the user needs to create or upload a quiz and then create a job
+posting with it. Then, the user can choose a quiz and enter the
+name of the candidate and their email address and press the send
+button. The candidate will receive a one time link to take the
+quiz that is added for the selected job posting. The employer
+will receive an email when the quiz is submitted and the inbox
+on the homepage will display the number of unseen quizzes that
+have been submitted. The bottom of the homepage contains a button
+to delete your account and all of your data, if you choose to.
 
 ### Quiz Creation
 
