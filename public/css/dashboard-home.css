@@ -86,12 +86,18 @@
     width: 200px;
 }
 
-#inbox-msg {
-    text-align: center;
+#inbox-image {
+    width: 100%;
 }
 
-#inbox-image {
-    margin-left: 47%;
+#email-logo {
+    display: block;
+    margin: 0px auto 0 auto;
+}
+
+#inbox-msg {
+    text-align: center;
+    margin-bottom: 25px;
 }
 
 .mdl-badge[data-badge]:after {
@@ -208,7 +214,7 @@
     }
 
     #inbox-container {
-        height: 180px;
+        /* height: 180px; */
         margin: 8px auto 0px auto;
     }
 
