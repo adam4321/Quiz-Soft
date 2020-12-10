@@ -68,6 +68,10 @@
     margin: 0px auto 20px auto;
 }
 
+#addAnswer {
+    margin-top: -8px;
+}
+
 .question_instructions {
     margin-top: 30px;
     margin-bottom: 5px;
@@ -166,6 +170,10 @@ td {
 @media only screen and (max-width: 1020px) {
     #dashboard-container {
         width: 560px;
+    }
+
+    #addAnswer {
+        margin-top: -12px;
     }
 }
 

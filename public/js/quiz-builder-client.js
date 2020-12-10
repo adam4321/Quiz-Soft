@@ -65,30 +65,31 @@ const MC_ANSWER_LIMIT = 8;
 function addAnswerOnClick(event) { 
     event.preventDefault();
 
-    let anchorNode = document.getElementById("appendBefore");
+    let anchorNode = document.getElementById("addAnswer");
     
     if (MC_ANSWER_COUNT < MC_ANSWER_LIMIT){
         MC_ANSWER_COUNT++;
 
         // Create the answer in the blank input
-        let breakDiv = document.createElement('br');
-        let answerBox = document.createElement('input');
+        let breakDiv    = document.createElement('br');
+        let answerBox   = document.createElement('input');
         let answerLabel = document.createElement('label');
         let answerInput = document.createElement('textarea');
-        answerBox.type        = 'radio';
-        answerBox.name        = 'mcGroup';
-        answerBox.id          = 'answerBox' + MC_ANSWER_COUNT;
-        answerBox.className   = 'answer_input'; 
-        answerLabel.for       = 'answerBox' + MC_ANSWER_COUNT;
+        answerBox.type          = 'radio';
+        answerBox.name          = 'mcGroup';
+        answerBox.id            = 'answerBox' + MC_ANSWER_COUNT;
+        answerBox.className     = 'answer_input'; 
+        answerLabel.for         = 'answerBox' + MC_ANSWER_COUNT;
+        answerLabel.id          = 'answerLabel' + MC_ANSWER_COUNT;
         answerInput.id          = 'answerInput' + MC_ANSWER_COUNT;
         answerInput.className   = 'answer_input';
-        answerInput.placeholder = 'Answer in blank';
+        answerInput.placeholder = 'Enter Answer ' + MC_ANSWER_COUNT;
         breakDiv.id             = 'answerBreak' + MC_ANSWER_COUNT;
         answerInput.setAttribute('data-lpignore','true');
-        createBox.insertBefore(answerBox, anchorNode);
-        createBox.insertBefore(answerLabel, anchorNode);
-        answerLabel.appendChild(answerInput);
-        createBox.insertBefore(breakDiv, anchorNode);
+        anchorNode.append(answerBox);
+        anchorNode.append(answerLabel);
+        anchorNode.appendChild(answerInput);
+        anchorNode.append(breakDiv);
 
         // Scroll the window to the bottom
         scrollDiv.scrollIntoView({behavior: "smooth", block: "center"});
@@ -101,9 +102,10 @@ function removeAnswerOnClick(event) {
     event.preventDefault();
 
     if (MC_ANSWER_COUNT > 1) {
-        document.getElementById("answerBox"+MC_ANSWER_COUNT).outerHTML = "";
-        document.getElementById("answerInput"+MC_ANSWER_COUNT).outerHTML = "";
-        document.getElementById("answerBreak"+MC_ANSWER_COUNT).outerHTML = "";
+        document.getElementById("answerBox"+MC_ANSWER_COUNT).remove();
+        document.getElementById("answerInput"+MC_ANSWER_COUNT).remove();
+        document.getElementById("answerBreak"+MC_ANSWER_COUNT).remove();
+        document.getElementById("answerLabel"+MC_ANSWER_COUNT).remove();
         MC_ANSWER_COUNT--;
     }
 };
@@ -678,6 +680,7 @@ multBtn.addEventListener('click', (e) => {
     let plusSign     = document.createElement('i');
     let minusBtn     = document.createElement('button');
     let minusSign    = document.createElement('i');
+    let ansContainer = document.createElement('div');
 
     // Style the Plus and Minus buttons and controls to add and remove answers
     addBtn.classList        = 'mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab';
@@ -694,8 +697,7 @@ multBtn.addEventListener('click', (e) => {
     let answerBox           = document.createElement('input');
     let answerLabel         = document.createElement('label');
     let answerInput         = document.createElement('textarea');
-    let lineBreakLast       = document.createElement('br');
-    lineBreakLast.id        = "appendBefore";
+    ansContainer.id         = "addAnswer";
     answerBox.type          = 'radio';
     answerBox.name          = 'mcGroup';
     answerBox.id            = 'answerBox' + 1;
@@ -703,7 +705,7 @@ multBtn.addEventListener('click', (e) => {
     answerLabel.for         = 'answerBox' + 1;
     answerInput.id          = 'answerInput' + 1;
     answerInput.className   = 'answer_input';
-    answerInput.placeholder = 'Answer in blank';
+    answerInput.placeholder = `Enter Answer ${MC_ANSWER_COUNT + 1}`;
     answerInput.setAttribute('data-lpignore','true');
 
     // Give the user instructions
@@ -719,11 +721,11 @@ multBtn.addEventListener('click', (e) => {
     btnContainer.appendChild(addBtn);
     btnContainer.appendChild(minusBtn);
     createBox.appendChild(breakParagraph);
-    createBox.appendChild(answerBox);
-    createBox.appendChild(answerLabel);
+    createBox.appendChild(ansContainer);
+    ansContainer.appendChild(answerBox);
+    ansContainer.appendChild(answerLabel);
     answerLabel.appendChild(answerInput);
-    createBox.appendChild(breakDiv);
-    createBox.appendChild(lineBreakLast);
+    ansContainer.appendChild(breakDiv);
 
     // Initialize first answer as checked
     document.getElementById("answerBox1").checked = true;
