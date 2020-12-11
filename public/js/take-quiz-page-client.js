@@ -66,7 +66,7 @@ window.onload = (e) => {
         if (refresh_check !== null) {
             let secondsTimeStampEpoch = moment.utc().valueOf(); 
             let old_val = localStorage.getItem('time_stamp');
-            let timer_diff = Math.round((secondsTimeStampEpoch - old_val)/1000);
+            let timer_diff = Math.round((secondsTimeStampEpoch - old_val) / 1000);
 
             // Error, UTC capture error
             if (timer_diff < 0) {
@@ -76,21 +76,21 @@ window.onload = (e) => {
             else {
                 let TIME_seconds = timerText[0] * 60;
                 let time_check = TIME_seconds - timer_diff;
-                console.log(TIME_seconds, " ",time_check);
+                console.log(TIME_seconds, " ", time_check);
 
                 // Error ran out of time
                 if (time_check <= 0) {
                     TIME_LIMIT = 0;
                 }
                 else {
-                    let resume_time_str = ((time_check/60).toFixed(2).toString()).split('.');
+                    let resume_time_str = ((time_check / 60).toFixed(2).toString()).split('.');
                     let seconds = (parseInt(resume_time_str[1]) * 0.6).toFixed(0);
                      
                     if (seconds > 9) {
-                        timerElement.textContent = Math.floor(time_check/60)+':'+seconds;
+                        timerElement.textContent = Math.floor(time_check/60) + ':' + seconds;
                     }
                     else {
-                        timerElement.textContent = Math.floor(time_check/60)+':0'+seconds;
+                        timerElement.textContent = Math.floor(time_check/60) + ':0' + seconds;
                     }
 
                     timerText = document.getElementById('timer-text').textContent.split(':');
@@ -163,7 +163,7 @@ window.onload = (e) => {
 };
 
 
-/* SUBMIT form - Function to verify responses before posting -------------- */
+/* SUBMIT form - Function to verify responses before posting --------------- */
 document.getElementById("take_quiz").onsubmit = () => {
     let el_checks = document.querySelectorAll('input[class="check-all"]:not([id="default-check"])');
     let prev_name = "";
@@ -175,19 +175,20 @@ document.getElementById("take_quiz").onsubmit = () => {
     for (let i = 0; i < el_checks.length; i++) {
         curr_name = el_checks[i].attributes.name.value;
 
-        if (i === 0){
+        if (i === 0) {
             prev_name = curr_name;
         }
 
-        // For each question,
-        // If any checks, then set hidden default checkbox to unchecked
+        // For each question, if any checks, then set hidden default checkbox to unchecked
         if ((curr_name != prev_name) || (i === (el_checks.length - 1))) {
+
+            // Set the default checkbox to unchecked
             if (validate_any_chosen > 0) {
-                // Set the default checkbox to unchecked
                 let el_default_check = document.querySelectorAll('input[id="default-check"][name="'+prev_name+'"]');
                 let default_box = el_default_check.item(0);
                 default_box.checked = false;
             }
+
             // Reset validate variable
             validate_any_chosen = 0;
             prev_name = curr_name;

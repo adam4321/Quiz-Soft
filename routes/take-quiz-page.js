@@ -4,9 +4,9 @@
 **  Root path:  localhost:3500/take_quiz
 **
 **  Contains:   /:token
-**              /
-**              /:token/quiz
 **              /time_stamp
+**              /:token/quiz
+**              /
 ******************************************************************************/
 
 const express = require('express');
@@ -54,6 +54,12 @@ function renderStart(req, res, next) {
             res.status(404).render("404", context);
     });
 };
+
+
+/* GENERATE TIME STAMP - Function to generate time stamp and maintain the timer --------- */
+function generateTimeStamp(req, res, next) {
+    req.session.time_stamp = req.body.time_stamp;
+}
 
 
 /* TAKE QUIZ - Function to render quiz that candidate takes ---------------- */
@@ -313,17 +319,11 @@ function scoreQuiz(req, res, next) {
 };
 
 
-/* GENERATE TIME STAMP - Function to generate time stamp and maintain the timer on page refresh */
-function generateTimeStamp(req, res, next) {
-    req.session.time_stamp = req.body.time_stamp;
-}
-
-
 /* QUIZZES PAGE ROUTES ----------------------------------------------------- */
 
 router.get('/:token', renderStart);
+router.post('/time_stamp', generateTimeStamp);
 router.get('/:token/quiz', renderQuiz);
 router.post('/', scoreQuiz);
-router.post('/time_stamp', generateTimeStamp);
 
 module.exports = router;
