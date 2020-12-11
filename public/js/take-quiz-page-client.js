@@ -6,11 +6,16 @@
 **               default value. Also timing functionality for client.
 ******************************************************************************/
 
+// Hide the timer until it loads
+document.getElementById('timer-text').style.display = 'none';
+
+
 /* Confirm back button page exit ------------------------------------------- */
 window.onbeforeunload = (e) => {
     e.preventDefault();
     
     let refresh_check = localStorage.getItem('refresh_quiz_semaphore');
+    
     if (refresh_check !== null) {
         refresh_check += 1;
         console.log(refresh_check);
@@ -22,6 +27,9 @@ window.onbeforeunload = (e) => {
 
     // Remove navigation prompt on form submission
     window.onbeforeunload = null;
+
+    // Hide the timer until it loads
+    document.getElementById('timer-text').style.display = 'none';
 
     return true;
 };
@@ -87,10 +95,10 @@ window.onload = (e) => {
                     let seconds = (parseInt(resume_time_str[1]) * 0.6).toFixed(0);
                      
                     if (seconds > 9) {
-                        timerElement.textContent = Math.floor(time_check/60) + ':' + seconds;
+                        timerElement.textContent = Math.floor(time_check / 60) + ':' + seconds;
                     }
                     else {
-                        timerElement.textContent = Math.floor(time_check/60) + ':0' + seconds;
+                        timerElement.textContent = Math.floor(time_check / 60) + ':0' + seconds;
                     }
 
                     timerText = document.getElementById('timer-text').textContent.split(':');
@@ -99,12 +107,16 @@ window.onload = (e) => {
             }
         }
 
+        
         // Count down on the timer display
         let minutes = parseInt(timerText[0]);
         let seconds = parseInt(timerText[1]);
+
+        // Display the timer
+        document.getElementById('timer-text').style.display = '';
         
         // Update the time and render the new time to the screen
-        let timerInterval = setInterval(() => {
+        function updateTimer() {
             if (seconds == 0) {
                 seconds = 59
                 minutes--;
@@ -136,27 +148,41 @@ window.onload = (e) => {
                     document.getElementById('timer-text').textContent = `${minutes}:${seconds}`;
                 }
             }        
-        }, 1000);
+        }
 
 
-        // Manage the automatic submission when time runs out
-        setTimeout(() => {
-            // Turn off the timer
-            clearInterval(timerInterval);
+        // Countdown the time
+        var interval = 1000; // In ms
+        var expected = Date.now() + interval;
+        setTimeout(step, interval);
 
-            // Display no time
-            document.getElementById('timer-text').textContent = `00:00`;
+        function step() {
+            // Calculate the drift (positive for overshooting)
+            var dt = Date.now() - expected;
 
-            // Click the submit button
-            document.getElementById('submit-btn').click();
-        }, TIME_LIMIT);
+            // Render the new timer to the user
+            updateTimer();
+
+            // Auto-submit when time is up
+            if (minutes === 0 && seconds === 0) {
+                // Display no time
+                document.getElementById('timer-text').textContent = `00:00`;
+
+                // Click the submit button
+                document.getElementById('submit-btn').click();
+            }
+            else {
+                expected += interval;
+                setTimeout(step, Math.max(0, interval - dt)); // Take the drift into account
+            } 
+        }
     }
     else {
         // Hide the timer and form
         var timerToHide = document.getElementById("timer-text");
+        var formToHide = document.getElementById("take_quiz");
         timerToHide.style.visibility = "hidden"; 
         timerToHide.style.display = "none"; 
-        var formToHide = document.getElementById("take_quiz");
         formToHide.style.visibility = "hidden"; 
         formToHide.style.display = "none"; 
     }

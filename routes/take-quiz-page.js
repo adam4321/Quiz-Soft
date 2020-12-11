@@ -38,7 +38,7 @@ const Employer = require('../models/employer.js');
 function renderStart(req, res, next) {
     var token = req.params.token;
     var decoded = jwt.decode(token, CRED_ENV.HASH_SECRET);
-    let taker_jobposting= decoded.jobposting;
+    let taker_jobposting = decoded.jobposting;
     let context = {};
 
     JobPosting.findById(ObjectId(taker_jobposting)).lean().exec()
