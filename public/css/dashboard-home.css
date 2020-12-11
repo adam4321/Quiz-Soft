@@ -86,8 +86,15 @@
     width: 200px;
 }
 
-#inbox-image {
+#inbox-badge-container {
     width: 100%;
+}
+
+#inbox-image {
+    display: block;
+    width: 48px;
+    height: 38px;
+    margin: 0px auto 0 auto;
 }
 
 #email-logo {

@@ -93,14 +93,18 @@
         <!-- Number badge on icon -->
             {{#if (eq missedMessages 0)}}
                 <a href="/quiz_soft/job_postings">
-                    <div id="inbox-image" class="material-icons">
-                        <img  id="email-logo" src="images/email-black-48dp.svg" alt="email logo">
+                    <div id="inbox-badge-container">
+                        <div id="inbox-image" class="material-icons">
+                            <img  id="email-logo" src="images/email-black-48dp.svg" alt="email logo">
+                        </div>
                     </div>
                 </a>
             {{else}}
                 <a href="/quiz_soft/job_postings">
-                    <div id="inbox-image" class="material-icons mdl-badge mdl-badge--overlap" data-badge="{{missedMessages}}">
-                        <img  id="email-logo" src="images/email-black-48dp.svg" alt="email logo">
+                    <div id="inbox-badge-container">
+                        <div id="inbox-image" class="material-icons mdl-badge mdl-badge--overlap" data-badge="{{missedMessages}}">
+                            <img  id="email-logo" src="images/email-black-48dp.svg" alt="email logo">
+                        </div>
                     </div>
                 </a>
             {{/if}}
