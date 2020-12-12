@@ -156,8 +156,11 @@ function generateMessage(email, cand_id, jobposting_id, quiz, title, message_hea
     let name = 'Invitation to Take ' + title + ' Aptitude Quiz';
 
     const msg = {
-        to: `${email}`, // Recipient
-        from: 'software.customquiz@gmail.com', // Verified sender
+        to: `${email}`,                             // Recepiant
+        from:  {
+            email: 'noreply.quizsoft@gmail.com',    // Sending address
+            name: 'Quiz Soft'                       // Name displayed in inbox
+        },
         subject: `${name}`,
         text: `${message}`,
         html: `${html_message}`,
