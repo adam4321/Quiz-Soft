@@ -3,7 +3,10 @@
 Software Quiz group project for Oregon State University. It is
 intended to replace Survey Monkey as a tool to email quizzes to
 job applicants. The team members are Adam Wright, Kevin Hill, 
-and Adam Slusser.
+and Adam Slusser. This repo holds my personal fork of the project
+for the purposes of maintainence and bug fixes. The project's
+prefork implementation can be found
+[here](https://github.com/adam4321/CS-467_Software_Quiz).
 
 It can be run by cloning the project and then setting up the
 necessary Google and Facebook Oauth2 credentials in the GCP
@@ -15,7 +18,8 @@ Then just call 'npm install' and call 'node app.js'!
 
 ### Signing In
 
-The application can be reached at this [link](https://adamjwright.com/quiz_soft/login).
+The application can be reached at this
+[link](https://adamjwright.com/quiz_soft/login).
 
 Two sign in options exist:
 1) Using your Google (Gmail) account
@@ -129,7 +133,9 @@ have previously saved. The user can click on a row in the table to
 view the quiz as a modal. There is a button available in each row to
 delete a quiz or to download a quiz. There is also a button on the
 page to upload a quiz which has previously been downloaded. The
-quizzes are saved with .quiz as the file extension.
+quizzes are saved with .quiz as the file extension. This repo
+includes a directory of example quizzes which can be used to
+test the application. 
 
 ### JobPosting
 
