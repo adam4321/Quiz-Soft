@@ -28,9 +28,6 @@ window.onbeforeunload = (e) => {
     // Remove navigation prompt on form submission
     window.onbeforeunload = null;
 
-    // Hide the timer until it loads
-    document.getElementById('timer-text').style.display = 'none';
-
     return true;
 };
 

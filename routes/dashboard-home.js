@@ -12,17 +12,17 @@
 
 const express = require('express');
 const router = express.Router();
-const sgMail = require('@sendgrid/mail');
-const jwt = require('jwt-simple');
+
 const { ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
-let CRED_ENV;
 
 // Get schemas
 const JobPosting = require('../models/jobposting.js');
 const Employer = require('../models/employer.js');
 const Candidate = require('../models/candidate.js');
 const Quiz = require('../models/quiz.js');
+
+let CRED_ENV;
 
 // Choose credentials for dev or prod
 if (process.env.NODE_ENV === 'production') {
@@ -33,10 +33,9 @@ else {
 }
 
 // Set up sendgrid
+const sgMail = require('@sendgrid/mail');
+const jwt = require('jwt-simple');
 sgMail.setApiKey(CRED_ENV.SENDGRID_API_KEY);
-
-// Debug Flag
-let DEBUG = 0;
 
 
 /* Middleware - Function to Check user is Logged in --------------------------------- */
@@ -190,71 +189,65 @@ function readEmailForm(req, res, next) {
         quizResponseId: []
     });
 
-    if (DEBUG === 0){
-        // Check if email is already registered in collection/candidate for jobposting
-        Candidate.find({}).where('email').equals(email).exec()
-        .then(cand_result => {
-            // No email found, add candidate
-            if (cand_result[0] == undefined) {
-                cand.save()
-                .then(result => {
-                    let cand_id = cand._id;
-                    var msg = generateMessage(email, cand_id, jobposting_id, quiz, title, message_header, first, last);
+    // Check if email is already registered in collection/candidate for jobposting
+    Candidate.find({}).where('email').equals(email).exec()
+    .then(cand_result => {
+        // No email found, add candidate
+        if (cand_result[0] == undefined) {
+            cand.save()
+            .then(result => {
+                let cand_id = cand._id;
+                var msg = generateMessage(email, cand_id, jobposting_id, quiz, title, message_header, first, last);
+                sendQuizLinkEmail(req, res, next, msg);
+            })
+            .catch(err => {
+                console.error(err);
+                res.status(500).render("dashboard-home", context);
+            });
+        }
+        else {
+            var query = JobPosting.findOne(
+                {"quizResponses.candidate_id": ObjectId(cand_result[0]._id)}, 
+                {"quizResponses.$": 1} 
+            );
+            query.where('_id').equals(ObjectId(jobposting_id));
+            query.exec()            
+            .then(job_result => {
+                if (job_result === null) {
+                    // TODO: Alert employer they have already sent an email to this candidate email
+
+                        // Yes, continue
+
+                        // Email found, but candidate has not submitted response yet for this job posting, add candidate
+                        cand.save()
+                        .then(result => {
+                            let cand_id = cand._id;
+                            var msg = generateMessage(email, cand_id, jobposting_id, quiz, title, message_header, first, last);
+                            sendQuizLinkEmail(req, res, next, msg);
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            res.status(500).render("dashboard-home", context);
+                        });
+
+                }
+                else {
+                    // Email already exists and for this job posting and has submitted response
+                    let cand_id = cand_result[0]._id
+                    var msg = generateMessage(email, cand_id, jobposting_id, quiz, title, message_header);
                     sendQuizLinkEmail(req, res, next, msg);
-                })
-                .catch(err => {
-                    console.error(err);
-                    res.status(500).render("dashboard-home", context);
-                });
-            }
-            else {
-                var query = JobPosting.findOne(
-                    {"quizResponses.candidate_id": ObjectId(cand_result[0]._id)}, 
-                    {"quizResponses.$": 1} 
-                );
-                query.where('_id').equals(ObjectId(jobposting_id));
-                query.exec()            
-                .then(job_result => {
-                    if (job_result === null) {
-                        // TODO: Alert employer they have already sent an email to this candidate email
-
-                            // Yes, continue
-
-                            // Email found, but candidate has not submitted response yet for this job posting, add candidate
-                            cand.save()
-                            .then(result => {
-                                let cand_id = cand._id;
-                                var msg = generateMessage(email, cand_id, jobposting_id, quiz, title, message_header, first, last);
-                                sendQuizLinkEmail(req, res, next, msg);
-                            })
-                            .catch(err => {
-                                console.error(err);
-                                res.status(500).render("dashboard-home", context);
-                            });
-
-                    }
-                    else {
-                        // Email already exists and for this job posting and has submitted response
-                        let cand_id = cand_result[0]._id
-                        var msg = generateMessage(email, cand_id, jobposting_id, quiz, title, message_header);
-                        sendQuizLinkEmail(req, res, next, msg);
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
-                    res.status(500).render("dashboard-home", context);
-                });
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            res.status(500).render("dashboard-home", context);
-        });
-    }
-    else {
-        // Email already exists
-        sendQuizLinkEmail(req, res, next, msg);
-    }
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                res.status(500).render("dashboard-home", context);
+            });
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        res.status(500).render("dashboard-home", context);
+    });
 };
 
 

@@ -11,11 +11,10 @@
 
 const express = require('express');
 const router = express.Router();
-const sgMail = require('@sendgrid/mail');
-const jwt = require('jwt-simple');
-const { ObjectId } = require('mongodb');
 
 const mongoose = require('mongoose');
+const { ObjectId } = require('mongodb');
+
 let CRED_ENV;
 
 // Choose credentials for dev or prod
@@ -25,6 +24,9 @@ if (process.env.NODE_ENV === 'production'){
     CRED_ENV = require('../credentials.js');
 }
 
+// Set up sendgrid
+const sgMail = require('@sendgrid/mail');
+const jwt = require('jwt-simple');
 sgMail.setApiKey(CRED_ENV.SENDGRID_API_KEY);
 
 // Get Schema
@@ -45,13 +47,14 @@ function renderStart(req, res, next) {
     .then(job_obj => {
         // No candidate response for this quiz yet
         context = job_obj.associatedQuiz[0].quiz;
+
         // Set layout with paths to css
         context.layout = 'quiz';
         res.status(200).render("start-quiz-page", context);
     })
     .catch((err) => {
         console.error(err);
-            res.status(404).render("404", context);
+        res.status(404).render("404", context);
     });
 };
 
@@ -68,10 +71,13 @@ function renderQuiz(req, res, next) {
     var decoded = jwt.decode(token, CRED_ENV.HASH_SECRET);
     let taker_email = decoded.email
     req.session.taker_email = taker_email;
+
     let taker_jobposting= decoded.jobposting;
     req.session.taker_jobposting = taker_jobposting;
+
     let taker_quiz = decoded.quiz
     req.session.taker_quiz = taker_quiz;
+
     let candidate_id = decoded.cand_id;
     var context = {};
 
