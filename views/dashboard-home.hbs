@@ -39,11 +39,12 @@
                                 <label for="jobposting" class="mdl-textfield__label">Job Posting</label>
                                 <ul for="jobposting" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
                                     {{#each_jobposting jobposting}}
-                                        {{#if (eq @j_index 0)}}
-                                            <li class="mdl-menu__item" data-val="{{job_id_expose this}}<,> {{job_title_expose this}}<,> {{job_message_expose this}}<,> {{job_quiz_expose this 0}}" data-selected="true">{{job_title_expose this}}</li>
-                                        {{else}}
-                                            <li class="mdl-menu__item" data-val="{{job_id_expose this}}<,> {{job_title_expose this}}<,> {{job_message_expose this}}<,> {{job_quiz_expose this 0}}">{{job_title_expose this}}</li>
-                                        {{/if}}
+                                        <li 
+                                            class="mdl-menu__item" 
+                                            data-val="{{job_id_expose this}}<,> {{job_title_expose this}}<,> {{job_message_expose this}}<,> {{job_quiz_expose this 0}}"
+                                        >
+                                            {{job_title_expose this}}
+                                        </li>
                                     {{/each_jobposting}}
                                 </ul>
                             </div>
