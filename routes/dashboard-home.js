@@ -154,7 +154,7 @@ function generateMessage(email, cand_id, jobposting_id, quiz, title, message_hea
     };
 
     var token = jwt.encode(payload, CRED_ENV.HASH_SECRET);
-    let quiz_link = 'https://adamjwright.com/quiz_soft/take_quiz/'+token;
+    let quiz_link = 'https://adamjwright.com/quiz_soft/take_quiz/' + token;
     let message = `<strong>Please click the following link to take the quiz</strong><br>${quiz_link}`;
     let html_message = `Hello ${first} ${last},<br><br>${message_header}<br><br>${message}`;
     let name = 'Invitation to Take ' + title + ' Aptitude Quiz';
@@ -174,7 +174,7 @@ function generateMessage(email, cand_id, jobposting_id, quiz, title, message_hea
 }
 
 
-/* SUBMIT EMAIL - Function to process quiz parameters and store candidate details in database ------ */
+/* SUBMIT EMAIL - Function to process quiz parameters and store candidate details in database ----- */
 function readEmailForm(req, res, next) {
     let first = req.body.first;
     let last = req.body.last;
@@ -215,25 +215,25 @@ function readEmailForm(req, res, next) {
                 {"quizResponses.candidate_id": ObjectId(cand_result[0]._id)}, 
                 {"quizResponses.$": 1} 
             );
-            query.where('_id').equals(ObjectId(jobposting_id)).query.exec()           
+            query.where('_id').equals(ObjectId(jobposting_id));
+            query.exec()            
             .then(job_result => {
                 if (job_result === null) {
                     // TODO: Alert employer they have already sent an email to this candidate email
 
-                        // Yes, continue
-
-                        // Email found, but candidate has not submitted response yet for this job posting, add candidate
-                        cand.save()
-                        .then(result => {
-                            let cand_id = cand._id;
-                            var msg = generateMessage(email, cand_id, jobposting_id, quiz, title, message_header, first, last);
-                            sendQuizLinkEmail(req, res, next, msg);
-                        })
-                        .catch(err => {
-                            console.error(err);
-                            res.status(500).render("dashboard-home", context);
-                        });
-
+                    // Yes, continue
+                    console.log("Already sent");
+                    // Email found, but candidate has not submitted response yet for this job posting, add candidate
+                    cand.save()
+                    .then(result => {
+                        let cand_id = cand._id;
+                        var msg = generateMessage(email, cand_id, jobposting_id, quiz, title, message_header, first, last);
+                        sendQuizLinkEmail(req, res, next, msg);
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        res.status(500).render("dashboard-home", context);
+                    });
                 }
                 else {
                     // Email already exists and for this job posting and has submitted response

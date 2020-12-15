@@ -25,9 +25,6 @@ window.onbeforeunload = (e) => {
         localStorage.setItem('refresh_quiz_semaphore', 1);
     }
 
-    // Remove navigation prompt on form submission
-    window.onbeforeunload = null;
-
     return true;
 };
 

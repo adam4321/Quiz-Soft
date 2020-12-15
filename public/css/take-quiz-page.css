@@ -2,6 +2,10 @@
 **  Description: QUIZ BUILDER PAGE - css file for the page
 ******************************************************************************/
 
+#logo {
+    margin: 0px 1px 11px 0px;
+}
+
 /* Timer settings */
 
 #timer-header {
@@ -183,6 +187,14 @@
 }
 
 @media only screen and (max-width: 600px) {
+    #logo {
+        margin-top: -2px;
+    }
+
+    #page-title {
+        margin-bottom: 50px;
+    }
+
     #timer-div {
         width: 280px;
         font-size: 12px;

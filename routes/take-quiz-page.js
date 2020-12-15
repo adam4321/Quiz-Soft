@@ -61,6 +61,7 @@ function renderStart(req, res, next) {
 /* GENERATE TIME STAMP - Function to generate time stamp and maintain the timer --------- */
 function generateTimeStamp(req, res, next) {
     req.session.time_stamp = req.body.time_stamp;
+    console.log('TIME STAMP!!!')
 }
 
 
@@ -109,7 +110,7 @@ function renderQuiz(req, res, next) {
                          res.status(404).render("404", context);
                     });
                 }
-                else{
+                else {
                     // Set layout with paths to css
                     context.layout = 'take_quiz';
                     res.status(404).render("quiz-taken-error-page", context);
@@ -282,7 +283,10 @@ function scoreQuiz(req, res, next) {
                         
                         const msg = {
                             to: `${emp_email}`, // Recipient
-                            from: 'software.customquiz@gmail.com', // Verified sender
+                            from:  {
+                                email: 'noreply.quizsoft@gmail.com',    // Sending address
+                                name: 'Quiz Soft'                       // Name displayed in inbox
+                            },
                             subject: `${subject}`,
                             text: `${message}`,
                             html: `${html_message}`,
