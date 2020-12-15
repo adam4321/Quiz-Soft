@@ -30,7 +30,6 @@ const jwt = require('jwt-simple');
 sgMail.setApiKey(CRED_ENV.SENDGRID_API_KEY);
 
 // Get Schema
-const Quiz = require('../models/quiz.js');
 const JobPosting = require('../models/jobposting.js');
 const Candidate = require('../models/candidate.js');
 const Employer = require('../models/employer.js');
@@ -81,17 +80,19 @@ function renderQuiz(req, res, next) {
     let candidate_id = decoded.cand_id;
     var context = {};
 
+    console.log(candidate_id);
+
     // Find if the hashed quiz exists already for the hashed job posting and hashed candidate id, 
     // then display already taken if true
     Candidate.find({}).where('_id').equals(candidate_id).exec()
     .then(cand_result => {
-        if (cand_result[0] !== undefined){
+        if (cand_result[0] !== undefined) {
             req.session.taker_id = cand_result[0]._id;
             var query = JobPosting.findOne(
                 { "quizResponses.candidate_id": ObjectId(cand_result[0]._id), "quizResponses.quiz_id": ObjectId(taker_quiz) }, 
                 { "quizResponses.$": 1 } 
             );
-            query.where('_id').equals( ObjectId(taker_jobposting) ).exec()            
+            query.where('_id').equals(ObjectId(taker_jobposting)).exec()            
             .then(job_result => {
                 if (job_result === null) {
                     JobPosting.findById(ObjectId(taker_jobposting)).lean().exec()

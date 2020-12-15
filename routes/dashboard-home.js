@@ -44,7 +44,7 @@ const checkUserLoggedIn = (req, res, next) => {
 }
 
 
-/* FIND QUIZZES - Function to query schema that is used more than once on the main dashboard ----------- */
+/* FIND QUIZZES - Function used in renderDashboard to find all quizzes and job postings ---------- */
 function renderPageFromQuery(req, res, next, context, user_id, emp_new) {
     // Find only job postings for current user (employer)
     JobPosting.find({}).lean().where('employer_id').equals(user_id).exec()
@@ -61,7 +61,7 @@ function renderPageFromQuery(req, res, next, context, user_id, emp_new) {
                 req.session.employer_selected = user_id;
                 res.status(201).render("dashboard-home", context);
             }
-            else{
+            else {
                 req.session.employer_selected = user_id;
                 res.status(200).render("dashboard-home", context);
             }     
@@ -128,12 +128,11 @@ function renderDashboard(req, res, next) {
         console.error(err);
         res.status(500).render("dashboard-home", context);
     });
-};
+}
 
 
-/* SEND LINK - Function send quiz link email to the candidate using SendGrid on the main dashboard --------------- */
+/* SEND LINK - Function to send quiz link email using SendGrid ------------- */
 function sendQuizLinkEmail(req, res, next, msg) {
-
     sgMail.send(msg)
     .then(() => {
         res.status(200).redirect('/quiz_soft/dashboard');
@@ -145,9 +144,15 @@ function sendQuizLinkEmail(req, res, next, msg) {
 }
 
 
-/* GENERATE MESSAGE - Function to generate the msg object ------------------ */
+/* GENERATE MESSAGE - Function used in readEmailForm to generate the msg object ------------------ */
 function generateMessage(email, cand_id, jobposting_id, quiz, title, message_header, first, last) {
-    var payload = { email: email, cand_id: cand_id, jobposting: jobposting_id, quiz: quiz};
+    var payload = {
+        email: email, 
+        cand_id: cand_id, 
+        jobposting: jobposting_id, 
+        quiz: quiz
+    };
+
     var token = jwt.encode(payload, CRED_ENV.HASH_SECRET);
     let quiz_link = 'https://adamjwright.com/quiz_soft/take_quiz/'+token;
     let message = `<strong>Please click the following link to take the quiz</strong><br>${quiz_link}`;
@@ -169,7 +174,7 @@ function generateMessage(email, cand_id, jobposting_id, quiz, title, message_hea
 }
 
 
-/* SUBMIT EMAIL - Function to process quiz parameters and store candidate details in database on the main dashboard -- */
+/* SUBMIT EMAIL - Function to process quiz parameters and store candidate details in database ------ */
 function readEmailForm(req, res, next) {
     let first = req.body.first;
     let last = req.body.last;
@@ -210,8 +215,7 @@ function readEmailForm(req, res, next) {
                 {"quizResponses.candidate_id": ObjectId(cand_result[0]._id)}, 
                 {"quizResponses.$": 1} 
             );
-            query.where('_id').equals(ObjectId(jobposting_id));
-            query.exec()            
+            query.where('_id').equals(ObjectId(jobposting_id)).query.exec()           
             .then(job_result => {
                 if (job_result === null) {
                     // TODO: Alert employer they have already sent an email to this candidate email
@@ -248,7 +252,7 @@ function readEmailForm(req, res, next) {
         console.error(err);
         res.status(500).render("dashboard-home", context);
     });
-};
+}
 
 
 /* DELETE USER - Function to remove a user --------------------------------- */
@@ -308,7 +312,7 @@ function removeUser(req, res, next) {
         console.error(err);
         res.status(500).render("dashboard-home", context);
     });
-};
+}
 
 
 /* DASHBOARD PAGE ROUTES --------------------------------------------------- */
