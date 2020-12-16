@@ -4,7 +4,6 @@
 **  Root path:  localhost:3500/take_quiz
 **
 **  Contains:   /:token
-**              /time_stamp
 **              /:token/quiz
 **              /
 ******************************************************************************/
@@ -42,27 +41,31 @@ function renderStart(req, res, next) {
     let taker_jobposting = decoded.jobposting;
     let context = {};
 
-    JobPosting.findById(ObjectId(taker_jobposting)).lean().exec()
-    .then(job_obj => {
-        // No candidate response for this quiz yet
-        context = job_obj.associatedQuiz[0].quiz;
+    // Check if the quiz was already started
+    Candidate.find({}).where('_id').equals(ObjectId(decoded.cand_id)).exec()
+    .then(cand_result => {
+        // If the quiz has a time stamp then redirect to it
+        if (cand_result[0].startTimeStamp) {
+            res.redirect(`/quiz_soft/take_quiz${req.url}/quiz`);         
+        }
+        // If there is no time stamp, then render the start button page
+        else {
+            JobPosting.findById(ObjectId(taker_jobposting)).lean().exec()
+            .then(job_obj => {
+                // No candidate response for this quiz yet
+                context = job_obj.associatedQuiz[0].quiz;
 
-        // Set layout with paths to css
-        context.layout = 'quiz';
-        res.status(200).render("start-quiz-page", context);
+                // Set layout with paths to css
+                context.layout = 'quiz';
+                res.status(200).render("start-quiz-page", context);
+            })
+            .catch((err) => {
+                console.error(err);
+                res.status(404).render("404", context);
+            });
+        }
     })
-    .catch((err) => {
-        console.error(err);
-        res.status(404).render("404", context);
-    });
 };
-
-
-/* GENERATE TIME STAMP - Function to generate time stamp and maintain the timer --------- */
-function generateTimeStamp(req, res, next) {
-    req.session.time_stamp = req.body.time_stamp;
-    console.log('TIME STAMP!!!')
-}
 
 
 /* TAKE QUIZ - Function to render quiz that candidate takes ---------------- */
@@ -81,33 +84,70 @@ function renderQuiz(req, res, next) {
     let candidate_id = decoded.cand_id;
     var context = {};
 
-    console.log(candidate_id);
-
     // Find if the hashed quiz exists already for the hashed job posting and hashed candidate id, 
     // then display already taken if true
     Candidate.find({}).where('_id').equals(candidate_id).exec()
     .then(cand_result => {
-        console.log(cand_result)
-        
-        // No quiz start timestamp exists, then add one
-        if (!cand_result[0].startTimeStamp) {
-            Candidate.updateOne({startTimeStamp: Date.now()}).where('_id').equals(candidate_id).exec()
-        }
 
-
+        // Check that a valid result was returned
         if (cand_result[0] !== undefined) {
+
+            // Store the candidate's id
             req.session.taker_id = cand_result[0]._id;
-            var query = JobPosting.findOne(
+            
+            // Find the related job posting
+            let query = JobPosting.findOne(
                 { "quizResponses.candidate_id": ObjectId(cand_result[0]._id), "quizResponses.quiz_id": ObjectId(taker_quiz) }, 
                 { "quizResponses.$": 1 } 
             );
+
             query.where('_id').equals(ObjectId(taker_jobposting)).exec()            
             .then(job_result => {
+
+                // No candidate response for this quiz yet
                 if (job_result === null) {
                     JobPosting.findById(ObjectId(taker_jobposting)).lean().exec()
                     .then(job_obj => {
-                        // No candidate response for this quiz yet
-                        context = job_obj.associatedQuiz[0].quiz;
+
+                        // No quiz start timestamp exists, then add one
+                        if (!cand_result[0].startTimeStamp) {
+                            Candidate.updateOne({startTimeStamp: Date.now()}).where('_id').equals(candidate_id).exec()
+
+                            // Set restart time to null
+                            context.restartTime = null;
+                        }
+                        // This quiz has already started
+                        else {
+                            let time_diff = Math.round((Date.now() - cand_result[0].startTimeStamp) / 1000);
+                            
+                            // If time is out
+                            if (time_diff <= 0) {
+                                context.restartTime = '00:00';
+                            }
+                            else {
+                                let restartTime = (job_obj.associatedQuiz[0].quiz.timeLimit * 60) - time_diff;
+
+                                // Create the new timer values
+                                let new_minutes = Math.floor(restartTime / 60);
+                                let new_seconds = restartTime % 60;
+
+                                // Format the new display
+                                if (new_minutes < 10) {
+                                    new_minutes = `0${new_minutes}`;
+                                }
+                                if (new_seconds < 10) {
+                                    new_seconds = `0${new_seconds}`;
+                                }
+
+                                context.restart = `${new_minutes}:${new_seconds}`;
+
+                                console.log(context.restart)
+                            }
+                        }
+
+                        context.posting = job_obj.associatedQuiz[0].quiz;
+
+                        console.log(context)
 
                         // Set layout with paths to css
                         context.layout = 'take_quiz';
@@ -115,11 +155,11 @@ function renderQuiz(req, res, next) {
                     })
                     .catch((err) => {
                         console.error(err);
-                         res.status(404).render("404", context);
+                        res.status(404).render("404", context);
                     });
                 }
+                // The quiz has already been submitted
                 else {
-                    // Set layout with paths to css
                     context.layout = 'take_quiz';
                     res.status(404).render("quiz-taken-error-page", context);
                 }
@@ -201,8 +241,10 @@ function calculate_score(quiz_obj, response_arr) {
 /* SUBMIT QUIZ - Function accept and score a quiz -------------------------- */
 function scoreQuiz(req, res, next) {
     let context = {};
+
     // Place comment and answers in context
     context.answers = req.body;
+
     // Set layout with paths to css
     let response_length = Object.keys(req.body).length - 2;
     context.response_length = response_length;
@@ -231,14 +273,17 @@ function scoreQuiz(req, res, next) {
 
             // Set commment
             let comment = response_arr.comment;
+            
             // Set total time
             let time_remaining = response_arr.time;
 
             // Convert total_time to seconds and decrease from time limit
             let total_time_split = time_remaining.split(":");
             let total_time_sec = parseInt(job_obj.associatedQuiz[0].quiz.timeLimit * 60) - (parseInt(total_time_split[0]) * 60 + parseInt(total_time_split[1]));
+            
             // Convert total_time to minutes
             let total_time = parseInt(total_time_sec / 60);
+           
             // Place time taken in context
             context.total_time = total_time;
             
@@ -248,22 +293,23 @@ function scoreQuiz(req, res, next) {
 
             // Update jobposting wth candidate responses and statistics
             JobPosting.findByIdAndUpdate(req.session.taker_jobposting, 
-            {
-                $push: { quizResponses:
-                    { 
-                        quiz_response_id : req.session.quiz_response_id,
-                        quiz_id : req.session.taker_quiz,
-                        candidate_id : req.session.taker_id,
-                        candidate_email : req.session.taker_email,
-                        candidateAnswers: candidate_answers,
-                        quizComment: comment,
-                        quizEpochTime: secondsSinceEpoch,
-                        quizTotalTime: total_time,
-                        quizScore: score
+                {
+                    $push: { quizResponses:
+                        { 
+                            quiz_response_id : req.session.quiz_response_id,
+                            quiz_id : req.session.taker_quiz,
+                            candidate_id : req.session.taker_id,
+                            candidate_email : req.session.taker_email,
+                            candidateAnswers: candidate_answers,
+                            quizComment: comment,
+                            quizEpochTime: secondsSinceEpoch,
+                            quizTotalTime: total_time,
+                            quizScore: score
+                        }
                     }
-                }
-            },
-            {useFindAndModify: false} ).exec()
+                },
+                {useFindAndModify: false} 
+            ).exec()
             .then(job_obj => {
                 if (job_obj.employer !== null){
                     req.session.employer_id = job_obj.employer_id;
@@ -341,7 +387,6 @@ function scoreQuiz(req, res, next) {
 /* QUIZZES PAGE ROUTES ----------------------------------------------------- */
 
 router.get('/:token', renderStart);
-router.post('/time_stamp', generateTimeStamp);
 router.get('/:token/quiz', renderQuiz);
 router.post('/', scoreQuiz);
 

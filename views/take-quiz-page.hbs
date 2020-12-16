@@ -9,11 +9,17 @@
             <div class="col-lg-auto col-md-auto col-sm-auto col-xs-auto">
                 <p id="timer-header" >Time Remaining </p> 
                 <img  id="timer-logo" src="../../images/timer.png" alt="question mark logo">
-                <p id="timer-text"> {{timeLimit}}:00 </p>
+                {{#if this.restart}}
+                    <p id="timer-text"> {{this.restart}} </p>
+                {{else}}
+                    <p id="timer-text"> {{this.posting.timeLimit}}:00 </p>
+                {{/if}}
             </div>
         </div>
     </div>
-    <div class="mdl-layout-spacer"></div> 
+    <div class="mdl-layout-spacer"></div>
+
+    {{#with this.posting}}
 
     <div id="quiz_elements">
         <div autofocus id="quiz-container" class="mdl-card mdl-shadow--2dp">
@@ -114,6 +120,7 @@
             </div> 
         </div>
     </div>
+    {{/with}}
 </div>
 
 <script src="../../js/moment.min.js"></script>

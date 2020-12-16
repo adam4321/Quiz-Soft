@@ -6,6 +6,24 @@
 **               is sent and the 2nd handles deleting a user's account
 ******************************************************************************/
 
+/* Force a page reload when using the back button -------------------------- */
+window.onunload = () => {};
+
+if (window.history.state != null && window.history.state.hasOwnProperty('historic')) {
+    if (window.history.state.historic == true) {
+        document.body.style.display = 'none';
+        window.history.replaceState({historic: false}, '');
+        window.location.reload();
+    } 
+    else {
+        window.history.replaceState({historic  : true}, '');
+    }
+} 
+else {
+    window.history.replaceState({historic  : true}, '');
+}
+
+
 // Get form
 let el_send_email = document.getElementById("test_sendgrid");
 
