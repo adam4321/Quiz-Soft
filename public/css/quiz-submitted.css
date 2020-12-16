@@ -1,0 +1,57 @@
+/******************************************************************************
+**  Description: QUIZ SUBMITTED PAGE - css file for the page
+******************************************************************************/
+
+#logo {
+    margin: 2px 0px 11px 0px;
+}
+
+#page-title {
+    margin-top: 26px;
+}
+
+#dashboard-container {
+    width: 730px;
+}
+
+#quiz-container{
+    margin: 30px auto 30px auto;
+    width: 730px;
+    text-align: center;
+}
+
+/* Media queries ----------------------------------------------------------- */
+
+@media only screen and (max-width: 1020px) {
+    #quiz-container {
+        max-width: 95%;
+    }
+
+    #dashboard-container {
+        max-width: 95%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    #logo {
+        margin-top: 4px;
+    }
+
+    #page-title {
+        margin-bottom: 50px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    #logo-container {
+        margin-left: -15px;
+    }
+
+    #quiz-container {
+        max-width: 100%;
+    }
+
+    .square-card {
+        width: 100%;
+    }
+}
