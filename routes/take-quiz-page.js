@@ -140,14 +140,11 @@ function renderQuiz(req, res, next) {
                                 }
 
                                 context.restart = `${new_minutes}:${new_seconds}`;
-
-                                console.log(context.restart)
                             }
                         }
 
+                        // Set the quiz
                         context.posting = job_obj.associatedQuiz[0].quiz;
-
-                        console.log(context)
 
                         // Set layout with paths to css
                         context.layout = 'take_quiz';
