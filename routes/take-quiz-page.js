@@ -87,6 +87,14 @@ function renderQuiz(req, res, next) {
     // then display already taken if true
     Candidate.find({}).where('_id').equals(candidate_id).exec()
     .then(cand_result => {
+        console.log(cand_result)
+        
+        // No quiz start timestamp exists, then add one
+        if (!cand_result[0].startTimeStamp) {
+            Candidate.updateOne({startTimeStamp: Date.now()}).where('_id').equals(candidate_id).exec()
+        }
+
+
         if (cand_result[0] !== undefined) {
             req.session.taker_id = cand_result[0]._id;
             var query = JobPosting.findOne(
