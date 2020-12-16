@@ -66,7 +66,7 @@ window.onload = (e) => {
         let TIME_LIMIT = timerText[0] * 60000;
 
         if (refresh_check !== null) {
-            let secondsTimeStampEpoch = moment.utc().valueOf(); 
+            let secondsTimeStampEpoch = moment.utc().valueOf();
             let old_val = localStorage.getItem('time_stamp');
             let timer_diff = Math.round((secondsTimeStampEpoch - old_val) / 1000);
 

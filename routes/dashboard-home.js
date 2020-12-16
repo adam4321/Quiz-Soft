@@ -191,6 +191,7 @@ function readEmailForm(req, res, next) {
         email: email,
         firstName: first,
         lastName: last,
+        startTimeStamp: null,
         quizResponseId: []
     });
 

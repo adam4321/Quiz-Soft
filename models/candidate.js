@@ -9,6 +9,7 @@ const candidateSchema = mongoose.Schema({
     email: String,
     firstName: String,
     lastName: String,
+    startTimeStamp: Number,
     quizResponseId: [mongoose.Schema.Types.ObjectId]
 });
 
