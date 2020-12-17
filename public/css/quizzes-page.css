@@ -302,6 +302,10 @@ input[type="file"] {
         font-size: 8px;
     }
 
+    .mdl-data-table td {
+        padding: 12px 17px;
+    }
+
     .quiz-name {
         width: 105px;
     }
@@ -309,6 +313,10 @@ input[type="file"] {
     .btn-style {
         font-size: 8px;
         width: 55px;
+    }
+
+    #downloadBtn {
+        width: 60px;
     }
 
     #upload-btn {
