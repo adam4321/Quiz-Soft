@@ -32,4 +32,8 @@
     #dashboard-container {
         width: 95%;
     }
+
+    .btn-style {
+        font-weight: bold;
+    }
 }
