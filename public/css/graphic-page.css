@@ -125,6 +125,10 @@ td:hover {
         margin: 0 auto 20px auto;
         width: 90%;
     }
+
+    .btn-style {
+        font-weight: bold;
+    }
 }
 
 
