@@ -267,5 +267,6 @@ td:hover {
     .btn-style {
         font-size: 8px;
         width: 55px;
+        font-weight: bold;
     }
 }

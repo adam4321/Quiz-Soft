@@ -279,6 +279,10 @@ td:hover {
 }
 
 @media only screen and (max-width: 575px) {
+    .btn-style {
+        font-weight: bold;
+    }
+
     #row-msg {
         font-size: 10px;
         margin-top: 25px;
@@ -370,9 +374,7 @@ td:hover {
     .quiz-rank {
         text-align: center;
     }
-}
 
-@media only screen and (max-width: 500px) {
     #quiz-comment {
         width: 95%;
     }
