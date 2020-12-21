@@ -44,11 +44,12 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 100px;
+    margin-top: 120px;
     width: 120px;
     height: 30px;
     background-color: #04536d;
     border-radius: 11px;
+    border: none;
     font-family: verdana;
     font-size: 18px;
     padding-top: 5px;
