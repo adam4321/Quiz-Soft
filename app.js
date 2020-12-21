@@ -139,7 +139,7 @@ app.get('/quiz_soft/auth/facebook/callback', passport.authenticate('facebook', {
 app.get('/quiz_soft/logout', (req, res) => {
     req.session = null;
     req.logout();
-    res.redirect('/quiz_soft/login');
+    res.redirect('/quiz_soft');
 });
 
 
