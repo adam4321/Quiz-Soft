@@ -34,7 +34,7 @@ const mongoose = require('mongoose');
 let credentials;
 
 // Choose credentials for dev or prod
-if (process.env.NODE_ENV === 'production'){
+if (process.env.NODE_ENV === 'production') {
     credentials = process.env;
 } else {
     credentials = require('./credentials.js');
@@ -65,13 +65,19 @@ app.use(cookieSession({
     secret: `${USERCRYPTO}`,
     resave: true,
     saveUninitialized: true
-}))
+}));
 
 // Include and configure passport
 const passport = require('passport');
 require('./passport.js');
 app.use(passport.initialize());
 app.use(passport.session());
+
+
+/* PORTFOLIO INTRO PAGE ---------------------------------------------------- */
+app.get('/quiz_soft', (req, res) => {
+    res.render('intro_page', {layout: 'login'});
+});
 
 
 /* PAGE ROUTES -------------------------------------------------------------- */
@@ -134,7 +140,7 @@ app.get('/quiz_soft/logout', (req, res) => {
     req.session = null;
     req.logout();
     res.redirect('/quiz_soft/login');
-})
+});
 
 
 /* ERROR ROUTES ------------------------------------------------------------ */
@@ -142,12 +148,12 @@ app.get('/quiz_soft/logout', (req, res) => {
 // Middleware - Function to Check user is Logged in
 const checkUserLoggedIn = (req, res, next) => {
     req.user ? next(): res.status(401).render('unauthorized-page', {layout: 'login'});
-}
+};
 
 // PAGE NOT FOUND - Route for bad path error page
 app.use(checkUserLoggedIn, (req, res) => {
     res.status(404).render('404');
-});
+})
    
 // INTERNAL SERVER ERROR - Route for a server-side error
 app.use((err, req, res, next) => {
