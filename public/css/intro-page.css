@@ -2,6 +2,12 @@
 **  Description:  Portfolio site intro page css file
 ************************************************************/
 
+#intro-msg {
+    text-align: center; 
+    font-size: 18px; 
+    margin: 60px 0 50px 0;
+}
+
 #login-link {
     background-color: rgba(224, 224, 224, 0.836);
     color: black;
@@ -84,6 +90,11 @@ button:hover, a:hover {
 /* Media queries for vertical mobile phones -------------------------------- */
 
 @media only screen and (max-width: 450px) {
+    #intro-msg {
+        margin-top: 5px;
+        margin-bottom: 20px;
+    }
+    
     #login-link {
         width: 250px;
         margin-top: 15px;
