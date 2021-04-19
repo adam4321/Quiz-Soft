@@ -119,7 +119,7 @@ app.use('/quiz_soft/take_quiz', require('./routes/take-quiz-page.js'));
 app.get('/quiz_soft/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 // GOOGLE POST-AUTH REDIRECT
-app.get('/quiz_soft/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login/failed' }),
+app.get('/quiz_soft/auth/google/callback', passport.authenticate('google', { failureRedirect: '/quiz_soft/login/failed' }),
     function(req, res) {
         res.redirect('/quiz_soft/dashboard');
     }
@@ -129,7 +129,7 @@ app.get('/quiz_soft/auth/google/callback', passport.authenticate('google', { fai
 app.get('/quiz_soft/auth/facebook', passport.authenticate('facebook', { scope : ['email'] }));
 
 // FACEBOOK POST-AUTH REDIRECT
-app.get('/quiz_soft/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login/failed' }),
+app.get('/quiz_soft/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/quiz_soft/login/failed' }),
     function(req, res) {
         res.redirect('/quiz_soft/dashboard');
     }
