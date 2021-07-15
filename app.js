@@ -75,8 +75,13 @@ app.use(passport.session());
 
 
 /* PORTFOLIO INTRO PAGE ---------------------------------------------------- */
-app.get('/quiz_soft', (req, res) => {
+app.get('/quiz_soft/intro', (req, res) => {
     res.render('intro_page', {layout: 'login'});
+});
+
+/* PRIVACY PAGE ------------------------------------------------------------ */
+app.get('/quiz_soft/privacy', (req, res) => {
+    res.render('privacy_page', {layout: 'login'});
 });
 
 
@@ -139,7 +144,7 @@ app.get('/quiz_soft/auth/facebook/callback', passport.authenticate('facebook', {
 app.get('/quiz_soft/logout', (req, res) => {
     req.session = null;
     req.logout();
-    res.redirect('/quiz_soft');
+    res.redirect('/quiz_soft/intro');
 });
 
 

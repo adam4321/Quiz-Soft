@@ -1,7 +1,7 @@
 /******************************************************************************
 **  Description: LOGIN PAGE - server side node.js routes
 **
-**  Root path:  localhost:3500/login
+**  Root path:  localhost:3500/quiz_soft/login
 **
 **  Contains:   /
 **              /failed
