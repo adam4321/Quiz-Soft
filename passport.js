@@ -34,7 +34,9 @@ passport.deserializeUser(function(user, done) {
 passport.use(new GoogleStrategy({
         clientID: GOOG_CREDS.GOOGLE_CLIENT_ID,
         clientSecret: GOOG_CREDS.GOOGLE_CLIENT_SECRET,
-        callbackURL: GOOG_CREDS.GOOGLE_CALLBACK_URL
+        callbackURL: process.env.PWD && process.env.PWD.includes('code/portfolio_site')
+            ? GOOG_CREDS.GOOGLE_CALLBACK_LOCAL
+            : GOOG_CREDS.GOOGLE_CALLBACK_URL
     },
     function(accessToken, refreshToken, profile, done) {
         return done(null, profile);
